@@ -221,7 +221,7 @@ function renderQuiz(){
     const selected=+b.dataset.answer;
     // These questions are for exploration, so every answer is accepted.
     b.classList.add("correct");
-    showToast(`Nice choice! ${q.answers[selected]}`);
+    showToast(` ! ${q.answers[selected]}`);
     if(quizIndex<CONFIG.quiz.length-1){quizIndex++;setTimeout(renderQuiz,600)}
     else{$("#quiz-progress").style.width="100%";setTimeout(()=>goToScene(7),800)}
   });
