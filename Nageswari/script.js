@@ -152,7 +152,7 @@ renderMemory();
 
 // GAME — 30 stars, more than 3 misses = restart
 const game=$("#star-game"),player=$("#player");
-let gameRunning=false,score=0,misses=0,timeLeft=20,stars=[],gameTimer,spawnTimer,rafId;
+let gameRunning=false,score=0,misses=0,timeLeft=30,stars=[],gameTimer,spawnTimer,rafId;
 function movePlayer(x,y){
   const r=game.getBoundingClientRect();
   player.style.left=`${Math.max(25,Math.min(r.width-25,x-r.left))}px`;
@@ -165,7 +165,7 @@ function spawnStar(){
   if(!gameRunning)return;
   const el=document.createElement("div");el.className="falling-star";
   el.style.left=`${Math.random()*90+5}%`;el.style.top="-30px";game.appendChild(el);
-  stars.push({el,y:-50,speed:4.8+Math.random()*4.8});
+  stars.push({el,y:-50,speed:3.5+Math.random()*3.5});
 }
 function gameLoop(){
   if(!gameRunning)return;
@@ -185,8 +185,8 @@ function gameLoop(){
   rafId=requestAnimationFrame(gameLoop);
 }
 function resetStars(){
-  stars.forEach(s=>s.el.remove());stars=[];score=0;misses=0;timeLeft=20;
-  $("#score").textContent="0";$("#misses").textContent="0";$("#time").textContent="35";
+  stars.forEach(s=>s.el.remove());stars=[];score=0;misses=0;timeLeft=30;
+  $("#score").textContent="0";$("#misses").textContent="0";$("#time").textContent="30";
 }
 function startGame(){
   if(gameRunning)return;
