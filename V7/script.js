@@ -205,7 +205,7 @@ function endGame(won){
     $("#game-message").style.display="grid";$("#start-game").textContent="Continue →";burstConfetti();
     setTimeout(()=>goToScene(6),1000);
   }else{
-    $("#game-message").textContent=misses>3?"Too many missed stars! The challenge is starting again…":"Time's up! Try the 30-star challenge again.";
+    $("#game-message").textContent=misses>1?"Too many missed stars! The challenge is starting again…":"Time's up! Try the 30-star challenge again.";
     $("#game-message").style.display="grid";$("#start-game").textContent="Start again";
   }
 }
