@@ -49,7 +49,7 @@
     <section class="scene" id="scene-2">
       <div class="eyebrow">Chapter 02 · A tiny wish</div>
       <h2>Wake the <span>glowing orb.</span></h2>
-      <p class="sub" id="orb-hint">Every tap unlocks a little piece of the Quote.</p>
+      <p class="sub" id="orb-hint">Every tap unlocks a little piece of the Quote</p>
       <div class="orb-wrap">
         <button id="orb" aria-label="Tap the glowing orb">
           <span class="orb-core"></span>
@@ -104,11 +104,11 @@
 
     <section class="scene" id="scene-5">
       <div class="eyebrow">Chapter 05 · Mini game</div>
-      <h2>Catch <span>30 birthday stars.</span></h2>
-      <p class="sub">Move around the sky and catch 30 stars. Miss more than 1 and the challenge starts again.</p>
+      <h2>Catch <span>50 birthday stars.</span></h2>
+      <p class="sub">Move around the sky and catch 50 stars. Miss more than 1 and the challenge starts again.</p>
       <div class="game-hud">
-        <span>Stars <b id="score">0</b>/30</span>
-        <span>Missed <b id="misses">0</b>/1</span>
+        <span>Stars <b id="score">0</b>/50</span>
+        <span>Missed <b id="misses">0</b>/3</span>
         <span>Time <b id="time">20</b>s</span>
       </div>
       <div id="star-game">
@@ -130,7 +130,7 @@
 
     <section class="scene" id="scene-7">
       <div class="eyebrow">Chapter 07 · Almost there</div>
-      <h2>Three… two… one…</h2>
+      <h2> Countdown...</h2>
       <div id="countdown" class="big-count">3</div>
       <p class="sub">Make a wish.</p>
     </section>
@@ -149,7 +149,7 @@
       <div class="final-content">
         <div class="eyebrow">The final chapter</div>
         <div class="chapter-number">23</div>
-        <h2>HAPPY<br><span>BIRTHDAY</span> <span>NAGESWARI</span></h2>
+        <h1>HAPPY<br><span>BIRTHDAY</span><span>Nageswari</span></h1>
         <p class="final-quote">“A new chapter. A thousand new possibilities.”</p>
 
         <div class="final-photo-wrap">
@@ -157,7 +157,7 @@
           <div id="final-photo-placeholder" class="final-photo-placeholder">YOUR PHOTO</div>
         </div>
 
-        <h2 class="final-name" id="final-name">Someone Special</h2>
+        <h2 class="final-name" id="final-name">To The Topper</h2>
         <div class="final-line"></div>
         <p class="final-small">May Chapter 23 be full of beautiful memories. ✨</p>
 
@@ -175,123 +175,9 @@
   </main>
 
   <audio id="birthdayMusic" loop preload="auto">
-    <source src="https://tunefree.in/" type="audio/mpeg">
+    <source src="birthday-music.mp3" type="audio/mpeg">
   </audio>
-  <script src="script.js">
-    <!-- Music Popup -->
-<div id="musicPopup" class="music-popup">
-    <div class="music-box">
-        <div class="music-icon">🎵</div>
-        <h2>Turn on the music? 🎶</h2>
-        <p>This birthday experience is better with music ❤️</p>
-
-        <button id="musicYes">🎵 YES, PLAY MUSIC</button>
-        <button id="musicNo">Maybe later</button>
-    </div>
-</div>
-
-<audio id="https://github.com/cha-nty/happybirthday-/blob/main/paulyudin-cartoon-cartoons-music-595946.mp3" loop></audio>
-
-<style>
-.music-popup {
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,.75);
-    backdrop-filter: blur(8px);
-    padding: 20px;
-}
-
-.music-box {
-    width: min(360px, 90%);
-    padding: 30px 22px;
-    text-align: center;
-    border-radius: 25px;
-    background: linear-gradient(145deg,#211044,#130822);
-    border: 1px solid rgba(255,255,255,.2);
-    box-shadow: 0 0 60px rgba(255,60,200,.35);
-    animation: musicPopupIn .5s ease;
-}
-
-.music-icon {
-    font-size: 55px;
-    animation: musicFloat 1.2s infinite ease-in-out;
-}
-
-.music-box h2 {
-    color: white;
-    margin: 12px 0 8px;
-}
-
-.music-box p {
-    color: #d8cfea;
-    font-size: 14px;
-    margin-bottom: 22px;
-}
-
-#musicYes {
-    width: 100%;
-    border: none;
-    padding: 15px;
-    border-radius: 50px;
-    font-size: 15px;
-    font-weight: bold;
-    color: #18051d;
-    background: linear-gradient(90deg,#ff5acb,#ffe36b);
-    cursor: pointer;
-}
-
-#musicNo {
-    margin-top: 12px;
-    background: none;
-    border: none;
-    color: #aaa;
-    cursor: pointer;
-}
-
-@keyframes musicPopupIn {
-    from {
-        opacity: 0;
-        transform: scale(.7);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@keyframes musicFloat {
-    50% {
-        transform: translateY(-8px) scale(1.08);
-    }
-}
-</style>
-
-<script>
-const musicPopup = document.getElementById("musicPopup");
-const birthdayMusic = document.getElementById("birthdayMusic");
-
-document.getElementById("musicYes").addEventListener("click", function () {
-
-    birthdayMusic.volume = 0.7;
-
-    birthdayMusic.play()
-        .then(() => {
-            musicPopup.style.display = "none";
-        })
-        .catch(() => {
-            alert("Please tap the music button again 🎵");
-        });
-
-});
-
-document.getElementById("musicNo").addEventListener("click", function () {
-    musicPopup.style.display = "none";
-});
-      
-  </script>
+  <script src="script.js"></script>
 </body>
-</html>
+  </html>
+  
