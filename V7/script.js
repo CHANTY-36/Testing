@@ -7,14 +7,14 @@ const CONFIG = {
 
   message: `Happy Birthday Nageswari! 🎂
 
-Twenty Two is more than just a number. It is the beginning of another beautiful chapter — full of new places, new memories, big dreams and tiny moments worth remembering.
+Twenty Three is more than just a number. It is the beginning of another beautiful chapter — full of new places, new memories, big dreams and tiny moments worth remembering.
 
-I hope you always keep that spark that makes you,
+I hope you always keep that spark that makes you💥,
 
 May you laugh loudly, dream fearlessly and find a little magic in ordinary days.
 
 Here's to Chapter 23. ✨
-With lots of happiness and warm wishes Nageswari ❤️`,
+With lots of happiness and warm wishes Nageswari💙`,
 
   photos: [
     {src:"",caption:"A memory that deserves its own little star."},
@@ -40,9 +40,15 @@ With lots of happiness and warm wishes Nageswari ❤️`,
     },
     {
       q:"Which kind of day sounds most like by Nageswari?",
-      answers:["A peaceful day alone 🌙","A fun day with friends 🫶","An adventure somewhere new 🌍","A cozy movie/music day 🎶"],
+      answers:["Cinema🎥","Cricket🏏","Football⚽","All of the above☑️"],
       correct:2
     }
+     
+    {
+      q:"What does Nageswari loves more?",
+      answers:["Watching phone 📱","Listening to music 🎧","Watching movies 🎬","Sitting alone 🌙"],
+      correct:3
+    },
   ]
 };
 
