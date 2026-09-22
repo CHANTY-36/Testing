@@ -14,7 +14,7 @@ I hope you always keep that spark that makes you,
 May you laugh loudly, dream fearlessly and find a little magic in ordinary days.
 
 Here's to Chapter 23. ✨
-With lots of happiness and warm wishes ❤️`,
+With lots of happiness and warm wishes💙`,
 
   photos: [
     {src:"",caption:"A memory that deserves its own little star."},
@@ -40,7 +40,7 @@ With lots of happiness and warm wishes ❤️`,
     },
       {
       q:"What does Nageswari Likes more?",
-      answers:["Cinema","Football","Cricket","All of the above"],
+      answers:["Cinema🎥","Football⚽","Cricket🏏","All of the above"],
       correct:3
     },
     {
@@ -165,7 +165,7 @@ function spawnStar(){
   if(!gameRunning)return;
   const el=document.createElement("div");el.className="falling-star";
   el.style.left=`${Math.random()*90+5}%`;el.style.top="-30px";game.appendChild(el);
-  stars.push({el,y:-50,speed:3.5+Math.random()*3.5});
+  stars.push({el,y:-50,speed:4.8+Math.random()*4.8});
 }
 function gameLoop(){
   if(!gameRunning)return;
@@ -200,15 +200,15 @@ function endGame(won){
   gameRunning=false;clearInterval(spawnTimer);clearInterval(gameTimer);cancelAnimationFrame(rafId);
   stars.forEach(s=>s.el.remove());stars=[];
   if(won){
-    $("#game-message").textContent="30 stars caught! You did it. ✨";
+    $("#game-message").textContent="50 stars caught! You did it. ✨";
     $("#game-message").style.display="grid";$("#start-game").textContent="Continue →";burstConfetti();
     setTimeout(()=>goToScene(6),1000);
   }else{
-    $("#game-message").textContent=misses>1?"Too many missed stars! The challenge is starting again…":"Time's up! Try the 30-star challenge again.";
+    $("#game-message").textContent=misses>1?"Too many missed stars! The challenge is starting again…":"Time's up! Try the 50-star challenge again.";
     $("#game-message").style.display="grid";$("#start-game").textContent="Start again";
   }
 }
-$("#start-game").onclick=()=>score>=30?goToScene(6):startGame();
+$("#start-game").onclick=()=>score>=50?goToScene(6):startGame();
 
 // QUIZ — interest questions
 let quizIndex=0;
