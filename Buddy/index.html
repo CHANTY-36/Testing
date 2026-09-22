@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#090014" />
+  <title>Chapter 23 — A Birthday Story</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Added Chapter 09 memory game + upgraded swipe arrows */
+    .memory-code-card{width:min(460px,92vw);padding:24px;border-radius:30px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.13);box-shadow:0 20px 70px rgba(0,0,0,.25)}
+    .memory-code-hud{display:flex;justify-content:space-between;align-items:center;color:#c9bdd2;font-size:14px;margin-bottom:10px}
+    .memory-code-level{color:#ffd86b;font-weight:700;letter-spacing:.08em}
+    .memory-code-status{min-height:32px;color:#ffd86b;font:22px Caveat,cursive;margin:8px 0 14px}
+    .memory-symbols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .memory-symbol{height:92px!important;margin:0!important;padding:0!important;border-radius:20px!important;background:rgba(255,255,255,.055)!important;border:1px solid rgba(255,255,255,.12)!important;box-shadow:none!important;font-size:36px!important;transition:.18s!important}
+    .memory-symbol.lit{background:rgba(255,216,107,.2)!important;border-color:#ffd86b!important;box-shadow:0 0 32px rgba(255,216,107,.35)!important;transform:scale(1.045)}
+    .memory-symbol:active{transform:scale(.96)}
+    .memory-tip{font-size:13px!important;margin:14px auto 0!important;color:#c9bdd2!important}
+    .swipe-controls .round-btn{width:50px;height:50px;padding:0;margin:0 12px;border-radius:50%;background:linear-gradient(135deg,#ff5db1,#9a6cff)!important;border:1px solid rgba(255,255,255,.3)!important;box-shadow:0 10px 30px rgba(255,93,177,.25),0 0 22px rgba(154,108,255,.18)!important;font-size:27px;line-height:1;transition:transform .2s,box-shadow .2s}
+    .swipe-controls .round-btn:hover{transform:translateY(-2px) scale(1.06);box-shadow:0 14px 34px rgba(255,93,177,.35),0 0 28px rgba(154,108,255,.25)!important}
+    .swipe-controls .round-btn:active{transform:scale(.92)}
+    @media(max-width:600px){.memory-symbol{height:82px!important}.memory-code-card{padding:19px}}
+  </style>
+
+</head>
+<body>
+  <div id="soundHint">Tap anywhere to begin ✨</div>
+  <div id="stars-bg"></div>
+  <div id="toast"></div>
+
+  <main id="app">
+    <section class="scene active" id="scene-0">
+      <div class="portal-intro">
+        <div class="eyebrow">A little secret is waiting</div>
+        <h1>There is a story<br><span>meant only for you Nageswari.</span></h1>
+        <p class="sub">Don't rush. Tap when you're ready.</p>
+        <button class="primary-btn" data-next="1">Begin the story <span>→</span></button>
+      </div>
+    </section>
+
+    <section class="scene" id="scene-1">
+      <div class="scene-copy">
+        <div class="eyebrow">Chapter 01 · The choice</div>
+        <h2>Two doors.<br><span>One leads to your surprise.</span></h2>
+        <p>Trust your instinct. There is no wrong answer… probably.</p>
+      </div>
+      <div class="portal-grid">
+        <button class="portal portal-a" data-portal="A">
+          <span class="portal-icon">✦</span>
+          <strong>Moon Door</strong>
+          <small>Follow the quiet light</small>
+        </button>
+        <button class="portal portal-b" data-portal="B">
+          <span class="portal-icon">∞</span>
+          <strong>Dream Door</strong>
+          <small>Follow the impossible</small>
+        </button>
+      </div>
+      <div class="portal-result" id="portal-result"></div>
+    </section>
+
+    <section class="scene" id="scene-2">
+      <div class="eyebrow">Chapter 02 · A tiny wish</div>
+      <h2>Wake the <span>glowing orb.</span></h2>
+      <p class="sub" id="orb-hint">Every tap unlocks a little piece of the Quote</p>
+      <div class="orb-wrap">
+        <button id="orb" aria-label="Tap the glowing orb">
+          <span class="orb-core"></span>
+          <span class="orb-ring r1"></span>
+          <span class="orb-ring r2"></span>
+          <span class="orb-ring r3"></span>
+          <span class="orb-spark s1">✦</span>
+          <span class="orb-spark s2">✧</span>
+          <span class="orb-spark s3">•</span>
+        </button>
+      </div>
+      <div class="orb-event" id="orb-event">The orb is waiting…</div>
+      <div class="counter"><span id="orb-count">0</span> / 7</div>
+    </section>
+
+    <section class="scene" id="scene-3">
+      <div class="eyebrow">Chapter 03 · Something wrapped</div>
+      <h2>Two taps.<br><span>Then the magic begins.</span></h2>
+      <p class="sub">Don't think it. Tap the Box.</p>
+      <div class="gift-stage">
+        <button id="gift" class="gift" aria-label="Open gift">
+          <span class="gift-lid"></span>
+          <span class="gift-box"></span>
+          <span class="gift-ribbon-v"></span>
+          <span class="gift-ribbon-h"></span>
+          <span class="gift-bow">🎀</span>
+          <span class="gift-message">Here we go! ✨</span>
+        </button>
+      </div>
+      <div class="counter"><span id="gift-count">0</span> / 2 taps</div>
+    </section>
+
+    <section class="scene" id="scene-4">
+      <div class="eyebrow">Chapter 04 · Seven little moments</div>
+      <h2>A memory is better<br><span>when you revisit it.</span></h2>
+      <div class="memory-shell">
+        <div class="memory-card" id="memory-card">
+          <div class="memory-number" id="memory-number">01</div>
+          <div class="memory-photo" id="memory-photo">
+            <div class="photo-placeholder">YOUR PHOTO 01</div>
+          </div>
+          <div class="memory-caption" id="memory-caption">The first page of a beautiful collection.</div>
+        </div>
+        <div class="swipe-controls">
+          <button id="memory-prev" class="round-btn">←</button>
+          <div class="dots" id="memory-dots"></div>
+          <button id="memory-next" class="round-btn">→</button>
+        </div>
+        <p class="hint">Swipe the card or use the arrows</p>
+      </div>
+    </section>
+
+    <section class="scene" id="scene-5">
+      <div class="eyebrow">Chapter 05 · Mini game</div>
+      <h2>Catch <span>50 birthday stars.</span></h2>
+      <p class="sub">Move around the sky and catch  50 stars. Miss more than 1 and the challenge starts again.</p>
+      <div class="game-hud">
+        <span>Stars <b id="score">0</b>/50</span>
+        <span>Missed <b id="misses">0</b>/1</span>
+        <span>Time <b id="time">30</b>s</span>
+      </div>
+      <div id="star-game">
+        <div class="game-glow"></div>
+        <div id="player"></div>
+        <div id="game-message">Tap the sky to start ✨</div>
+      </div>
+      <button id="start-game" class="primary-btn small">Start starlight game</button>
+    </section>
+
+    <section class="scene" id="scene-6">
+      <div class="eyebrow">Chapter 06 · Getting to know you</div>
+      <h2>Let's see what<br><span>you really enjoy.</span></h2>
+      <div class="quiz-card">
+        <div class="quiz-progress"><span id="quiz-progress"></span></div>
+        <div id="quiz-content"></div>
+      </div>
+    </section>
+
+    <section class="scene" id="scene-7">
+      <div class="eyebrow">Chapter 07 · Almost there</div>
+      <h2> Countdown...</h2>
+      <div id="countdown" class="big-count">3</div>
+      <p class="sub">Make a wish.</p>
+    </section>
+
+    <section class="scene" id="scene-8">
+      <div class="letter">
+        <div class="eyebrow">Chapter 08 · A message</div>
+        <h2>From my heart <span>to yours.</span></h2>
+        <div id="typewriter" class="typewriter"></div>
+        <button id="message-next" class="primary-btn small hidden">There is one last chapter →</button>
+      </div>
+    </section>
+
+
+    <section class="scene" id="scene-9">
+      <div class="eyebrow">Chapter 09 · Secret memory</div>
+      <h2>Remember the <span>magic.</span></h2>
+      <p class="sub">Watch the symbols carefully, then repeat the sequence.</p>
+      <div class="memory-code-card">
+        <div class="memory-code-hud">
+          <span>Secret sequence</span>
+          <span id="memory-level" class="memory-code-level">Level 0 / 3</span>
+        </div>
+        <div id="memory-code-status" class="memory-code-status">Ready when you are…</div>
+        <div class="memory-symbols">
+          <button class="memory-symbol" data-symbol="moon" aria-label="Moon">🌙</button>
+          <button class="memory-symbol" data-symbol="star" aria-label="Star">⭐</button>
+          <button class="memory-symbol" data-symbol="heart" aria-label="Heart">❤️</button>
+          <button class="memory-symbol" data-symbol="spark" aria-label="Spark">✨</button>
+        </div>
+        <p class="memory-tip">Complete all 3 levels to unlock the final chapter 🔐</p>
+      </div>
+      <button id="start-memory" class="primary-btn small">Start memory game</button>
+    </section>
+
+    <section class="scene final-scene" id="scene-10">
+      <canvas id="fireworks"></canvas>
+      <div class="final-content">
+        <div class="eyebrow">Chapter 10 · The final chapter</div>
+        <div class="chapter-number">23</div>
+        <h2>HAPPY<br><span>BIRTHDAY</span><span>Nageswari</span></h2>
+        <p class="final-quote">“A new chapter. A thousand new possibilities.”</p>
+
+        <div class="final-photo-wrap">
+          <img id="final-photo" class="final-photo" alt="Birthday memory" />
+          <div id="final-photo-placeholder" class="final-photo-placeholder">YOUR PHOTO</div>
+        </div>
+
+        <h2 class="final-name" id="final-name">To The Topper</h2>
+        <div class="final-line"></div>
+        <p class="final-small">May Chapter 23 be full of beautiful memories. ✨</p>
+
+        <div class="reaction-area" id="reaction-area">
+          <p>So… did you like your little birthday journey?</p>
+          <div class="reaction-buttons">
+            <button id="like-btn" class="primary-btn small">I loved it ❤️</button>
+            <button id="dislike-btn" class="ghost-btn">Not really 😅</button>
+          </div>
+        </div>
+        <div id="reaction-message" class="reaction-message"></div>
+        <button id="replay" class="ghost-btn replay-btn">Replay from Chapter 1 ↻</button>
+      </div>
+    </section>
+  </main>
+
+  <audio id="birthdayMusic" loop preload="auto">
+    <source src="birthday-music.mp3" type="audio/mpeg">
+  </audio>
+  <script src="script.js"></script>
+</body>
+</html>
