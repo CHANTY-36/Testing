@@ -152,7 +152,7 @@ renderMemory();
 
 // GAME — 30 stars, more than 3 misses = restart
 const game=$("#star-game"),player=$("#player");
-let gameRunning=false,score=0,misses=0,timeLeft=30,stars=[],gameTimer,spawnTimer,rafId;
+let gameRunning=false,score=0,misses=0,timeLeft=20,stars=[],gameTimer,spawnTimer,rafId;
 function movePlayer(x,y){
   const r=game.getBoundingClientRect();
   player.style.left=`${Math.max(25,Math.min(r.width-25,x-r.left))}px`;
@@ -165,7 +165,7 @@ function spawnStar(){
   if(!gameRunning)return;
   const el=document.createElement("div");el.className="falling-star";
   el.style.left=`${Math.random()*90+5}%`;el.style.top="-30px";game.appendChild(el);
-  stars.push({el,y:-50,speed:3.5+Math.random()*3.5});
+  stars.push({el,y:-30,speed:2.5+Math.random()*2.5});
 }
 function gameLoop(){
   if(!gameRunning)return;
@@ -176,7 +176,7 @@ function gameLoop(){
     const dx=sr.left+sr.width/2-(pr.left+pr.width/2),dy=sr.top+sr.height/2-(pr.top+pr.height/2);
     if(Math.hypot(dx,dy)<40){
       s.el.remove();stars.splice(i,1);score++;$("#score").textContent=score;burstAt(sr.left+sr.width/2,sr.top+sr.height/2);
-      if(score>=50)endGame(true);
+      if(score>=30)endGame(true);
     }else if(s.y>game.clientHeight+40){
       s.el.remove();stars.splice(i,1);misses++;$("#misses").textContent=misses;
       if(misses>1){endGame(false);return}
@@ -185,8 +185,8 @@ function gameLoop(){
   rafId=requestAnimationFrame(gameLoop);
 }
 function resetStars(){
-  stars.forEach(s=>s.el.remove());stars=[];score=0;misses=0;timeLeft=30;
-  $("#score").textContent="0";$("#misses").textContent="0";$("#time").textContent="30";
+  stars.forEach(s=>s.el.remove());stars=[];score=0;misses=0;timeLeft=20;
+  $("#score").textContent="0";$("#misses").textContent="0";$("#time").textContent="20";
 }
 function startGame(){
   if(gameRunning)return;
@@ -200,15 +200,15 @@ function endGame(won){
   gameRunning=false;clearInterval(spawnTimer);clearInterval(gameTimer);cancelAnimationFrame(rafId);
   stars.forEach(s=>s.el.remove());stars=[];
   if(won){
-    $("#game-message").textContent="50 stars caught! You did it. ✨";
+    $("#game-message").textContent="30 stars caught! You did it. ✨";
     $("#game-message").style.display="grid";$("#start-game").textContent="Continue →";burstConfetti();
     setTimeout(()=>goToScene(6),1000);
   }else{
-    $("#game-message").textContent=misses>1?"Too many missed stars! The challenge is starting again…":"Time's up! Try the 50-star challenge again.";
+    $("#game-message").textContent=misses>3?"Too many missed stars! The challenge is starting again…":"Time's up! Try the 30-star challenge again.";
     $("#game-message").style.display="grid";$("#start-game").textContent="Start again";
   }
 }
-$("#start-game").onclick=()=>score>=50?goToScene(6):startGame();
+$("#start-game").onclick=()=>score>=30?goToScene(6):startGame();
 
 // QUIZ — interest questions
 let quizIndex=0;
