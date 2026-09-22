@@ -5,7 +5,7 @@ const CONFIG = {
   name: "To The Topper",
   finalPhoto: "assets/photos/birthday-person.jpg",
 
-  message: `Happy Birthday Nageswari! 🎂
+  message: `Happy Birthday Nageswari!🎂
 
 Twenty Three is more than just a number. It is the beginning of another beautiful chapter — full of new places, new memories, big dreams and tiny moments worth remembering.
 
@@ -46,8 +46,8 @@ With lots of happiness and warm wishes Nageswari💙`,
    
     {
       q:"What does Nageswari loves more?",
-      answers:["Watching phone 📱","Listening to music 🎧","Watching movies 🎬","Sitting alone 🌙"],
-      correct:3
+      answers:["Watching phone 📱","Listening to music 🎧","Watching movies 🎬","All of the above ☑️"],
+      correct:
     },
   ]
 };
@@ -166,7 +166,7 @@ function spawnStar(){
   if(!gameRunning)return;
   const el=document.createElement("div");el.className="falling-star";
   el.style.left=`${Math.random()*90+5}%`;el.style.top="-30px";game.appendChild(el);
-  stars.push({el,y:-30,speed:1.5+Math.random()*1.5});
+  stars.push({el,y:-50,speed:4.5+Math.random()*4.5});
 }
 function gameLoop(){
   if(!gameRunning)return;
@@ -201,15 +201,15 @@ function endGame(won){
   gameRunning=false;clearInterval(spawnTimer);clearInterval(gameTimer);cancelAnimationFrame(rafId);
   stars.forEach(s=>s.el.remove());stars=[];
   if(won){
-    $("#game-message").textContent="30 stars caught! You did it. ✨";
+    $("#game-message").textContent="50 stars caught! You did it. ✨";
     $("#game-message").style.display="grid";$("#start-game").textContent="Continue →";burstConfetti();
     setTimeout(()=>goToScene(6),1000);
   }else{
-    $("#game-message").textContent=misses>1?"Too many missed stars! The challenge is starting again…":"Time's up! Try the 30-star challenge again.";
+    $("#game-message").textContent=misses>1?"Too many missed stars! The challenge is starting again…":"Time's up! Try the 50-star challenge again.";
     $("#game-message").style.display="grid";$("#start-game").textContent="Start again";
   }
 }
-$("#start-game").onclick=()=>score>=30?goToScene(6):startGame();
+$("#start-game").onclick=()=>score>=50?goToScene(6):startGame();
 
 // QUIZ — interest questions
 let quizIndex=0;
@@ -221,7 +221,7 @@ function renderQuiz(){
     const selected=+b.dataset.answer;
     // These questions are for exploration, so every answer is accepted.
     b.classList.add("correct");
-    showToast(` ! ${q.answers[selected]}`);
+    showToast(`&nbsp ${q.answers[selected]}`);
     if(quizIndex<CONFIG.quiz.length-1){quizIndex++;setTimeout(renderQuiz,600)}
     else{$("#quiz-progress").style.width="100%";setTimeout(()=>goToScene(7),800)}
   });
