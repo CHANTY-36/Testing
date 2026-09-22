@@ -5,15 +5,15 @@ const CONFIG = {
   name: "Someone Special",
   finalPhoto: "assets/photos/birthday-person.jpg",
 
-  message: `Happy Birthday! 🎂
+  message: `Happy Birthday Nageswari! 🎂
 
-Twenty is more than just a number. It is the beginning of another beautiful chapter — full of new places, new memories, big dreams and tiny moments worth remembering.
+Twenty Twp is more than just a number. It is the beginning of another beautiful chapter — full of new places, new memories, big dreams and tiny moments worth remembering.
 
 I hope you always keep that spark that makes you, YOU.
 
 May you laugh loudly, dream fearlessly and find a little magic in ordinary days.
 
-Here's to Chapter 20. ✨
+Here's to Chapter 22. ✨
 With lots of happiness and warm wishes ❤️`,
 
   photos: [
@@ -29,17 +29,17 @@ With lots of happiness and warm wishes ❤️`,
   // These are interest-style questions. Change the correct answers if needed.
   quiz: [
     {
-      q:"What do you like to do most in your free time?",
+      q:"What does Nageswari like to do most in your free time?",
       answers:["Watching phone 📱","Listening to music 🎧","Watching movies 🎬","Sitting alone 🌙"],
       correct:1
     },
     {
-      q:"What would you enjoy doing more?",
+      q:"What would Nageswari enjoy doing more?",
       answers:["Travelling ✈️","Cooking 🍳","Playing 🎮","Trying something completely new ✨"],
       correct:0
     },
     {
-      q:"Which kind of day sounds most like you?",
+      q:"Which kind of day sounds most like by Nageswari?",
       answers:["A peaceful day alone 🌙","A fun day with friends 🫶","An adventure somewhere new 🌍","A cozy movie/music day 🎶"],
       correct:2
     }
@@ -147,7 +147,7 @@ renderMemory();
 
 // GAME — 30 stars, more than 3 misses = restart
 const game=$("#star-game"),player=$("#player");
-let gameRunning=false,score=0,misses=0,timeLeft=35,stars=[],gameTimer,spawnTimer,rafId;
+let gameRunning=false,score=0,misses=0,timeLeft=20,stars=[],gameTimer,spawnTimer,rafId;
 function movePlayer(x,y){
   const r=game.getBoundingClientRect();
   player.style.left=`${Math.max(25,Math.min(r.width-25,x-r.left))}px`;
@@ -160,7 +160,7 @@ function spawnStar(){
   if(!gameRunning)return;
   const el=document.createElement("div");el.className="falling-star";
   el.style.left=`${Math.random()*90+5}%`;el.style.top="-30px";game.appendChild(el);
-  stars.push({el,y:-30,speed:2.5+Math.random()*2.5});
+  stars.push({el,y:-30,speed:1.5+Math.random()*1.5});
 }
 function gameLoop(){
   if(!gameRunning)return;
@@ -174,14 +174,14 @@ function gameLoop(){
       if(score>=30)endGame(true);
     }else if(s.y>game.clientHeight+40){
       s.el.remove();stars.splice(i,1);misses++;$("#misses").textContent=misses;
-      if(misses>3){endGame(false);return}
+      if(misses>1){endGame(false);return}
     }
   }
   rafId=requestAnimationFrame(gameLoop);
 }
 function resetStars(){
-  stars.forEach(s=>s.el.remove());stars=[];score=0;misses=0;timeLeft=35;
-  $("#score").textContent="0";$("#misses").textContent="0";$("#time").textContent="35";
+  stars.forEach(s=>s.el.remove());stars=[];score=0;misses=0;timeLeft=20;
+  $("#score").textContent="0";$("#misses").textContent="0";$("#time").textContent="20";
 }
 function startGame(){
   if(gameRunning)return;
