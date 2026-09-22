@@ -29,7 +29,7 @@ With lots of happiness and warm wishes💙`,
   // These are interest-style questions. Change the correct answers if needed.
   quiz: [
     {
-      q:"What do Nageswari like to do most in your free time?",
+      q:"What Nageswari like to do most in free time?",
       answers:["Watching phone 📱","Listening to music 🎧","Watching movies 🎬","Sitting alone 🌙"],
       correct:1
     },
@@ -44,7 +44,7 @@ With lots of happiness and warm wishes💙`,
       correct:3
     },
     {
-      q:"Which kind of day sounds most like you?",
+      q:"Which kind of day sounds most like by Nageswari?",
       answers:["A peaceful day alone 🌙","A fun day with friends 🫶","An adventure somewhere new 🌍","A cozy movie/music day 🎶"],
       correct:2
     }
