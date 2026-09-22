@@ -9,9 +9,9 @@ const CONFIG = {
 
 Twenty Three is more than just a number. It is the beginning of another beautiful chapter — full of new places, new memories, big dreams and tiny moments worth remembering.
 
-I hope you always keep that spark that makes you, 
+I hope you always keep that spark that makes you💥,
 
-May you laugh loudly, dream fearlessly and find a little magic in ordinary days.
+May you laugh loudly, dream fearlessly and find a little magic in ordinary days🌟.
 
 Here's to Chapter 23. ✨
 With lots of happiness and warm wishes💙`,
@@ -220,7 +220,7 @@ function renderQuiz(){
     const selected=+b.dataset.answer;
     // These questions are for exploration, so every answer is accepted.
     b.classList.add("correct");
-    showToast(`Nice choice! ${q.answers[selected]}`);
+    showToast(` ${q.answers[selected]}`);
     if(quizIndex<CONFIG.quiz.length-1){quizIndex++;setTimeout(renderQuiz,600)}
     else{$("#quiz-progress").style.width="100%";setTimeout(()=>goToScene(7),800)}
   });
