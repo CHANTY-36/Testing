@@ -2,19 +2,19 @@
    Change CONFIG below. Put your final photo at the path in finalPhoto.
 */
 const CONFIG = {
-  name: "To The Topper",
+  name: "Someone Special",
   finalPhoto: "assets/photos/birthday-person.jpg",
 
-  message: `Happy Birthday Nageswari!🎂
+  message: `Happy Birthday Nageswari💙! 🎂
 
 Twenty Three is more than just a number. It is the beginning of another beautiful chapter — full of new places, new memories, big dreams and tiny moments worth remembering.
 
-I hope you always keep that spark that makes you💥,
+I hope you always keep that spark that makes you, 
 
 May you laugh loudly, dream fearlessly and find a little magic in ordinary days.
 
 Here's to Chapter 23. ✨
-With lots of happiness and warm wishes Nageswari💙`,
+With lots of happiness and warm wishes ❤️`,
 
   photos: [
     {src:"",caption:"A memory that deserves its own little star."},
@@ -29,7 +29,7 @@ With lots of happiness and warm wishes Nageswari💙`,
   // These are interest-style questions. Change the correct answers if needed.
   quiz: [
     {
-      q:"What does Nageswari like to do most in your free time?",
+      q:"What do Nageswari like to do most in your free time?",
       answers:["Watching phone 📱","Listening to music 🎧","Watching movies 🎬","Sitting alone 🌙"],
       correct:1
     },
@@ -38,17 +38,16 @@ With lots of happiness and warm wishes Nageswari💙`,
       answers:["Travelling ✈️","Cooking 🍳","Playing 🎮","Trying something completely new ✨"],
       correct:0
     },
+      {
+      q:"What does Nageswari Likes more?",
+      answers:["Cinema","Football","Cricket","All of the above"],
+      correct:3
+    },
     {
-      q:"Which kind of day sounds most like by Nageswari?",
-      answers:["Cinema🎥","Cricket🏏","Football⚽","All of the above☑️"],
+      q:"Which kind of day sounds most like you?",
+      answers:["A peaceful day alone 🌙","A fun day with friends 🫶","An adventure somewhere new 🌍","A cozy movie/music day 🎶"],
       correct:2
-    },
-   
-    {
-      q:"What does Nageswari loves more?",
-      answers:["Watching phone 📱","Listening to music 🎧","Watching movies 🎬","All of the above ☑️"],
-      correct:
-    },
+    }
   ]
 };
 
@@ -166,7 +165,7 @@ function spawnStar(){
   if(!gameRunning)return;
   const el=document.createElement("div");el.className="falling-star";
   el.style.left=`${Math.random()*90+5}%`;el.style.top="-30px";game.appendChild(el);
-  stars.push({el,y:-50,speed:4.5+Math.random()*4.5});
+  stars.push({el,y:-50,speed:3.5+Math.random()*3.5});
 }
 function gameLoop(){
   if(!gameRunning)return;
@@ -177,17 +176,17 @@ function gameLoop(){
     const dx=sr.left+sr.width/2-(pr.left+pr.width/2),dy=sr.top+sr.height/2-(pr.top+pr.height/2);
     if(Math.hypot(dx,dy)<40){
       s.el.remove();stars.splice(i,1);score++;$("#score").textContent=score;burstAt(sr.left+sr.width/2,sr.top+sr.height/2);
-      if(score>=30)endGame(true);
+      if(score>=50)endGame(true);
     }else if(s.y>game.clientHeight+40){
       s.el.remove();stars.splice(i,1);misses++;$("#misses").textContent=misses;
-      if(misses=2){endGame(false);return}
+      if(misses>1){endGame(false);return}
     }
   }
   rafId=requestAnimationFrame(gameLoop);
 }
 function resetStars(){
   stars.forEach(s=>s.el.remove());stars=[];score=0;misses=0;timeLeft=20;
-  $("#score").textContent="0";$("#misses").textContent="0";$("#time").textContent="20";
+  $("#score").textContent="0";$("#misses").textContent="0";$("#time").textContent="35";
 }
 function startGame(){
   if(gameRunning)return;
@@ -201,15 +200,15 @@ function endGame(won){
   gameRunning=false;clearInterval(spawnTimer);clearInterval(gameTimer);cancelAnimationFrame(rafId);
   stars.forEach(s=>s.el.remove());stars=[];
   if(won){
-    $("#game-message").textContent="50 stars caught! You did it. ✨";
+    $("#game-message").textContent="30 stars caught! You did it. ✨";
     $("#game-message").style.display="grid";$("#start-game").textContent="Continue →";burstConfetti();
     setTimeout(()=>goToScene(6),1000);
   }else{
-    $("#game-message").textContent=misses>1?"Too many missed stars! The challenge is starting again…":"Time's up! Try the 50-star challenge again.";
+    $("#game-message").textContent=misses>1?"Too many missed stars! The challenge is starting again…":"Time's up! Try the 30-star challenge again.";
     $("#game-message").style.display="grid";$("#start-game").textContent="Start again";
   }
 }
-$("#start-game").onclick=()=>score>=50?goToScene(6):startGame();
+$("#start-game").onclick=()=>score>=30?goToScene(6):startGame();
 
 // QUIZ — interest questions
 let quizIndex=0;
@@ -221,7 +220,7 @@ function renderQuiz(){
     const selected=+b.dataset.answer;
     // These questions are for exploration, so every answer is accepted.
     b.classList.add("correct");
-    showToast(`&nbsp ${q.answers[selected]}`);
+    showToast(`Nice choice! ${q.answers[selected]}`);
     if(quizIndex<CONFIG.quiz.length-1){quizIndex++;setTimeout(renderQuiz,600)}
     else{$("#quiz-progress").style.width="100%";setTimeout(()=>goToScene(7),800)}
   });
@@ -302,3 +301,4 @@ function replayFromBeginning(){
 function burstAt(x,y){const e=document.createElement("div");e.style.cssText=`position:fixed;left:${x}px;top:${y}px;width:8px;height:8px;border-radius:50%;background:#ffd86b;box-shadow:0 0 20px #ffd86b;z-index:100;pointer-events:none`;document.body.appendChild(e);e.animate([{transform:"scale(1)",opacity:1},{transform:"scale(5)",opacity:0}],{duration:500});setTimeout(()=>e.remove(),500)}
 function burstConfetti(){for(let i=0;i<45;i++){const c=document.createElement("span");c.textContent=["✦","✧","•","♥","✺"][Math.floor(Math.random()*5)];c.style.cssText=`position:fixed;z-index:100;left:${50+(Math.random()-.5)*20}%;top:${48+(Math.random()-.5)*10}%;font-size:${10+Math.random()*18}px;color:hsl(${Math.random()*360},100%,75%);pointer-events:none`;document.body.appendChild(c);const x=(Math.random()-.5)*innerWidth*.9,y=(Math.random()-.5)*innerHeight*.9;c.animate([{transform:"translate(0,0) scale(.5)",opacity:1},{transform:`translate(${x}px,${y}px) rotate(${Math.random()*720}deg)`,opacity:0}],{duration:1000+Math.random()*900,easing:"cubic-bezier(.1,.7,.2,1)"});setTimeout(()=>c.remove(),2000)}}
 function showToast(text){const t=$("#toast");t.textContent=text;t.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.remove("show"),1300)}
+   
