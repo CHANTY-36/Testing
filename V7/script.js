@@ -2,19 +2,19 @@
    Change CONFIG below. Put your final photo at the path in finalPhoto.
 */
 const CONFIG = {
-  name: "Someone Special",
+  name: "To The Topper",
   finalPhoto: "assets/photos/birthday-person.jpg",
 
   message: `Happy Birthday Nageswari! 🎂
 
-Twenty Twp is more than just a number. It is the beginning of another beautiful chapter — full of new places, new memories, big dreams and tiny moments worth remembering.
+Twenty Two is more than just a number. It is the beginning of another beautiful chapter — full of new places, new memories, big dreams and tiny moments worth remembering.
 
-I hope you always keep that spark that makes you, YOU.
+I hope you always keep that spark that makes you,
 
 May you laugh loudly, dream fearlessly and find a little magic in ordinary days.
 
-Here's to Chapter 22. ✨
-With lots of happiness and warm wishes ❤️`,
+Here's to Chapter 23. ✨
+With lots of happiness and warm wishes Nageswari ❤️`,
 
   photos: [
     {src:"",caption:"A memory that deserves its own little star."},
@@ -174,7 +174,7 @@ function gameLoop(){
       if(score>=30)endGame(true);
     }else if(s.y>game.clientHeight+40){
       s.el.remove();stars.splice(i,1);misses++;$("#misses").textContent=misses;
-      if(misses>1){endGame(false);return}
+      if(misses=2){endGame(false);return}
     }
   }
   rafId=requestAnimationFrame(gameLoop);
