@@ -2,11 +2,11 @@
    Change CONFIG below. Put your final photo at the path in finalPhoto.
 */
 const CONFIG = {
-  name: "Someone Special",
+  name: "To The Topper",
   finalPhoto: "assets/photos/birthday-person.jpg",
 
   message: `Happy Birthday Nageswari! 🎂
-
+On 26-09-2004 a spark risers with courage and great attitude!
 Twenty Three is more than just a number. It is the beginning of another beautiful chapter — full of new places, new memories, big dreams and tiny moments worth remembering.
 
 I hope you always keep that spark that makes you💥,
