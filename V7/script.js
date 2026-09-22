@@ -42,8 +42,8 @@ With lots of happiness and warm wishes Nageswari💙`,
       q:"Which kind of day sounds most like by Nageswari?",
       answers:["Cinema🎥","Cricket🏏","Football⚽","All of the above☑️"],
       correct:2
-    }
-     
+    },
+   
     {
       q:"What does Nageswari loves more?",
       answers:["Watching phone 📱","Listening to music 🎧","Watching movies 🎬","Sitting alone 🌙"],
