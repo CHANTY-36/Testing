@@ -1,0 +1,61 @@
+*{box-sizing:border-box}
+:root{
+  --pink:#ff4fa3;--purple:#8d5cff;--cyan:#47e7ff;--yellow:#ffd76a;
+  --white:#fff;--glass:rgba(255,255,255,.12)
+}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#10072b;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+body{touch-action:manipulation}
+button{font:inherit}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:20}
+#app{position:relative;width:100%;height:100%;overflow:hidden}
+.topbar{position:fixed;top:12px;left:14px;right:14px;z-index:50;display:flex;gap:10px;align-items:center}
+.progress{height:4px;flex:1;border-radius:20px;background:rgba(255,255,255,.13);overflow:hidden}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--cyan));transition:width .7s}
+.icon-btn{width:42px;height:42px;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(0,0,0,.18);backdrop-filter:blur(12px);color:#fff}
+.stage{width:100%;height:100%;position:relative;display:grid;place-items:center;padding:60px 20px 30px;isolation:isolate}
+.scene{width:min(720px,100%);text-align:center;position:relative;z-index:2;animation:sceneIn .75s cubic-bezier(.2,.8,.2,1)}
+@keyframes sceneIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
+.scene h1,.scene h2,.scene p{margin:.4em 0}
+.kicker{font-size:.8rem;letter-spacing:.28em;text-transform:uppercase;opacity:.7}
+.title{font-size:clamp(2.3rem,12vw,5.8rem);line-height:.9;font-weight:900;letter-spacing:-.06em;text-shadow:0 8px 35px rgba(255,79,163,.25)}
+.subtitle{font-size:clamp(1rem,4.8vw,1.35rem);line-height:1.55;opacity:.9}
+.small{font-size:.88rem;opacity:.68}
+.neon{background:linear-gradient(100deg,#fff,var(--pink),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.glow{filter:drop-shadow(0 0 20px rgba(255,79,163,.55))}
+.cta{border:0;color:#fff;padding:15px 23px;border-radius:999px;background:linear-gradient(100deg,var(--pink),var(--purple));box-shadow:0 12px 35px rgba(141,92,255,.32);cursor:pointer;font-weight:800;letter-spacing:.02em;transition:.2s}
+.cta:active{transform:scale(.95)}
+.cta.secondary{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);box-shadow:none}
+.dont{margin-top:25px;animation:float 2s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-7px)}}
+.tap-orb{width:120px;height:120px;border-radius:50%;margin:35px auto;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#fff,#ff9dcc 18%,#ff4fa3 48%,#792cff 78%);box-shadow:0 0 25px #ff4fa3,0 0 80px rgba(71,231,255,.25);animation:pulse 1.4s infinite;cursor:pointer}
+@keyframes pulse{50%{transform:scale(1.08);box-shadow:0 0 40px #ff4fa3,0 0 100px rgba(71,231,255,.4)}}
+.mystery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:390px;margin:25px auto}
+.mystery-item{aspect-ratio:1;border:1px solid rgba(255,255,255,.15);border-radius:25px;background:rgba(255,255,255,.07);backdrop-filter:blur(10px);display:grid;place-items:center;font-size:2.3rem;cursor:pointer;transition:.25s}
+.mystery-item:active{transform:scale(.9)}
+.gift{width:180px;height:140px;margin:30px auto;position:relative;cursor:pointer;animation:float 2s infinite}
+.gift .lid{position:absolute;left:0;right:0;top:0;height:38px;background:linear-gradient(90deg,#ff3c94,#a34fff);border-radius:12px 12px 5px 5px;z-index:2}
+.gift .box{position:absolute;left:12px;right:12px;top:31px;bottom:0;background:linear-gradient(135deg,#ff5ba8,#7049ff);border-radius:4px 4px 16px 16px}
+.gift:before,.gift:after{content:"";position:absolute;background:#ffd76a;z-index:3}
+.gift:before{width:24px;top:0;bottom:0;left:78px}
+.gift:after{height:17px;left:0;right:0;top:12px}
+.photo-wrap{position:relative;width:min(330px,78vw);margin:20px auto 12px;padding:9px;border-radius:25px;background:linear-gradient(135deg,#fff,#ff8fca,#8b72ff);box-shadow:0 20px 70px rgba(0,0,0,.35);transform:rotate(-2deg)}
+.photo-wrap img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:17px;background:#24134b}
+.photo-note{font-size:.95rem;opacity:.82;min-height:2.8em}
+.journey{font-size:4rem;animation:travel 2.8s linear infinite}
+@keyframes travel{0%{transform:translateX(-30vw)}100%{transform:translateX(30vw)}}
+.quiz{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:420px;margin:25px auto}
+.quiz button{padding:18px;border-radius:20px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:#fff;font-weight:800;cursor:pointer}
+.quiz button:active{transform:scale(.95)}
+.count{font-size:clamp(7rem,35vw,13rem);font-weight:1000;line-height:.8;background:linear-gradient(180deg,#fff,#ff61ae,#7b5cff);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 30px rgba(255,79,163,.5));animation:countPop .9s}
+@keyframes countPop{from{transform:scale(1.5);opacity:0}to{transform:none;opacity:1}}
+.birthday .title{font-size:clamp(3.3rem,17vw,8rem)}
+.message{max-width:650px;margin:18px auto;font-size:1.05rem;line-height:1.85;text-align:left;background:rgba(255,255,255,.07);padding:22px;border:1px solid rgba(255,255,255,.13);border-radius:25px;backdrop-filter:blur(12px)}
+.cursor{display:inline-block;width:2px;height:1em;background:#fff;vertical-align:-.12em;animation:blink .7s infinite}
+@keyframes blink{50%{opacity:0}}
+.final-photo{width:min(250px,70vw);margin:auto}
+.final-photo img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:50%;border:7px solid rgba(255,255,255,.7);box-shadow:0 0 70px rgba(255,79,163,.55)}
+.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-5px)}}
+.bubble{position:absolute;border-radius:50%;background:rgba(255,255,255,.08);filter:blur(1px);animation:rise linear infinite;z-index:-1}
+@keyframes rise{from{transform:translateY(110vh) scale(.7)}to{transform:translateY(-20vh) scale(1.2)}}
+@media(max-width:420px){.stage{padding-left:15px;padding-right:15px}.message{font-size:.98rem;padding:18px}.mystery-grid{gap:9px}.mystery-item{border-radius:18px}}
