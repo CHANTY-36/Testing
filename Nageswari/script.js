@@ -52,29 +52,6 @@ correct:2
 };
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const music = $("#birthdayMusic");
-const musicChoice = $("#music-choice");
-const musicYes = $("#music-yes");
-const musicNo = $("#music-no");
-
-let musicStarted = false;
-
-music.volume = 0.65;
-
-musicYes.onclick = () => {
-music.play()
-.then(() => {
-musicStarted = true;
-musicChoice.classList.add("hidden");
-})
-.catch(() => {
-showToast("Tap again to start the music 🎵");
-});
-};
-
-musicNo.onclick = () => {
-musicChoice.classList.add("hidden");
-};
 let currentScene=0,audioStarted=false;
 
 function goToScene(n){
@@ -88,24 +65,12 @@ if(n===8)startTypewriter();
 if(n===9)startFireworks();
 }
 function startAudio(){
-if(musicStarted) return;
-
-music.play()
-.then(() => {
-musicStarted = true;
-})
-.catch(() => {});
+  if(audioStarted)return;
+  audioStarted=true;
+  $("#birthdayMusic")?.play().catch(()=>{});
+  $("#soundHint").style.opacity="0";
 }
-
-\[
-("[data-next]").forEach(b=>b.onclick=()=>{startAudio();goToScene(+b.dataset.next)});  
-  
-// PORTALS  
-$$(".portal").forEach(b=>b.onclick=()=>{  
-  $("#portal-result").textContent=b.dataset.portal==="A"?"The moon chose you. ✦":"The dream opened. ∞";  
-  setTimeout(()=>goToScene(2),900);  
-});  
-  
+  document.addEventListener("pointerdown",startAudio,{once:true});
 // ORB — every tap creates a different event, not just a pulse  
 let orbCount=0;  
 const orbEvents=[  
