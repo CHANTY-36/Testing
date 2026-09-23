@@ -705,7 +705,7 @@ function endGame(won) {
   if (won) {
 
     $("#game-message").textContent =
-      "30 stars caught! You did it. ✨";
+      "50 stars caught! You did it. ✨";
 
     $("#game-message").style.display =
       "grid";
@@ -720,7 +720,7 @@ function endGame(won) {
   } else {
 
     $("#game-message").textContent =
-      misses > 3
+      misses > 1
         ? "Too many missed stars! The challenge is starting again…"
         : "Time's up! Try the 50-star challenge again.";
 
