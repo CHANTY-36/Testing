@@ -17,7 +17,7 @@ Here's to Chapter 23. ✨
 With lots of happiness and warm wishes💙`,
 
   photos: [
-    {src:"",caption:"A memory that deserves its own little star."},
+    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/IMG-20260922-WA0006.jpg",caption:"A memory that deserves its own little star."},
     {src:"",caption:"One moment. A thousand feelings."},
     {src:"",caption:"Some memories never really leave us."},
     {src:"",caption:"A page worth turning back to."},
@@ -52,6 +52,29 @@ With lots of happiness and warm wishes💙`,
 };
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const music = $("#birthdayMusic");
+const musicChoice = $("#music-choice");
+const musicYes = $("#music-yes");
+const musicNo = $("#music-no");
+
+let musicStarted = false;
+
+music.volume = 0.65;
+
+musicYes.onclick = () => {
+  music.play()
+    .then(() => {
+      musicStarted = true;
+      musicChoice.classList.add("hidden");
+    })
+    .catch(() => {
+      showToast("Tap again to start the music 🎵");
+    });
+};
+
+musicNo.onclick = () => {
+  musicChoice.classList.add("hidden");
+};
 let currentScene=0,audioStarted=false;
 
 function goToScene(n){
@@ -65,12 +88,15 @@ function goToScene(n){
   if(n===9)startFireworks();
 }
 function startAudio(){
-  if(audioStarted)return;
-  audioStarted=true;
-  $("#birthdayMusic")?.play().catch(()=>{});
-  $("#soundHint").style.opacity="0";
+  if(musicStarted) return;
+
+  music.play()
+    .then(() => {
+      musicStarted = true;
+    })
+    .catch(() => {});
 }
-document.addEventListener("pointerdown",startAudio,{once:true});
+
 $$("[data-next]").forEach(b=>b.onclick=()=>{startAudio();goToScene(+b.dataset.next)});
 
 // PORTALS
