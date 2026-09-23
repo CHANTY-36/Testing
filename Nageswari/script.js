@@ -17,7 +17,7 @@ Here's to Chapter 23. ✨
 With lots of happiness and warm wishes💙`,
 
   photos: [
-    {src:"",caption:"A memory that deserves its own little star."},
+    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/IMG-20260922-WA0006.jpg",caption:"A memory that deserves its own little star."},
     {src:"",caption:"One moment. A thousand feelings."},
     {src:"",caption:"Some memories never really leave us."},
     {src:"",caption:"A page worth turning back to."},
@@ -200,11 +200,11 @@ function endGame(won){
   gameRunning=false;clearInterval(spawnTimer);clearInterval(gameTimer);cancelAnimationFrame(rafId);
   stars.forEach(s=>s.el.remove());stars=[];
   if(won){
-    $("#game-message").textContent="30 stars caught! You did it. ✨";
+    $("#game-message").textContent="50 stars caught! You did it. ✨";
     $("#game-message").style.display="grid";$("#start-game").textContent="Continue →";burstConfetti();
     setTimeout(()=>goToScene(6),1000);
   }else{
-    $("#game-message").textContent=misses>3?"Too many missed stars! The challenge is starting again…":"Time's up! Try the 50-star challenge again.";
+    $("#game-message").textContent=misses>1?"Too many missed stars! The challenge is starting again…":"Time's up! Try the 50-star challenge again.";
     $("#game-message").style.display="grid";$("#start-game").textContent="Start again";
   }
 }
