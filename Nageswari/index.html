@@ -11,6 +11,27 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- MUSIC CHOICE -->
+<div id="music-choice" class="music-choice">
+  <div class="music-orb">♪</div>
+
+  <div class="music-card">
+    <div class="music-eyebrow">A little something extra ✨</div>
+
+    <h3>Would you like<br>some music?</h3>
+
+    <p>Let the story begin with a little melody.</p>
+
+    <div class="music-buttons">
+      <button id="music-yes">♪ Play music</button>
+      <button id="music-no">Maybe later</button>
+    </div>
+  </div>
+</div>
+
+<audio id="birthdayMusic" loop preload="auto">
+  <source src="Music/koya.mp3" type="audio/mpeg">
+</audio>
   <div id="soundHint">Tap anywhere to begin ✨</div>
   <div id="stars-bg"></div>
   <div id="toast"></div>
@@ -173,9 +194,7 @@
       </div>
     </section>
   </main>
-<audio id="birthdayMusic" loop preload="auto">
-    <source src="Music/koya.mp3" type="audio/mpeg">
-</audio>
+
   
   <script src="script.js"></script>
 </body>
