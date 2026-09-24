@@ -5,15 +5,17 @@ const CONFIG = {
   name: "To The Topper",
   finalPhoto: "assets/photos/birthday-person.jpg",
 
-  message: `Happy Birthday Nageswari! 🎂
-On 26-09-2004 a spark risers with courage and great attitude!
+  message: `Happiest Birthday Nageswari! 🎂
+On 26-09-2004 a spark risers with great courage and attitude!
 Twenty Three is more than just a number. It is the beginning of another beautiful chapter — full of new places, new memories, big dreams and tiny moments worth remembering.
 
+Some ups and downs my happen, But god always with you💫
+.
 I hope you always keep that spark that makes you💥,
 
 May you laugh loudly, dream fearlessly and find a little magic in ordinary days🌟.
 
-Here's to Chapter 23. ✨
+Here's to Chapter 23...✨
 With lots of happiness and warm wishes💙`,
 
   photos: [
@@ -309,11 +311,11 @@ if(CONFIG.finalPhoto){
   img.onerror=()=>{img.style.display="none";$("#final-photo-placeholder").style.display="grid"};
 }
 $("#like-btn").onclick=()=>{
-  $("#reaction-message").textContent="Thank you! ❤️ I'm so happy you liked it.";
+  $("#reaction-message").textContent="Thank you! ❤️ I'm so happy you liked it and give reply with ✨.";
   $("#reaction-area").style.display="none";
 };
 $("#dislike-btn").onclick=()=>{
-  $("#reaction-message").textContent="Thanks for being honest! 😄 Let's try the journey again.";
+  $("#reaction-message").textContent="Thanks for being honest! 😄 and please give reply with 🙌🏼";
   $("#reaction-area").style.display="none";
   setTimeout(()=>replayFromBeginning(),1300);
 };
