@@ -9,8 +9,6 @@ const CONFIG = {
 On 26-09-2004 a spark risers with great courage and attitude!
 Twenty Three is more than just a number. It is the beginning of another beautiful chapter — full of new places, new memories, big dreams and tiny moments worth remembering.
 
-Some ups and downs my happen, But god always with you💫
-.
 I hope you always keep that spark that makes you💥,
 
 May you laugh loudly, dream fearlessly and find a little magic in ordinary days🌟.
