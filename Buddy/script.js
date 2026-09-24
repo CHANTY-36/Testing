@@ -8,11 +8,9 @@ const CONFIG = {
   message: `Happiest Birthday Nageswari! 🎂
 On 26-09-2004 a spark risers with great courage and attitude!
 Twenty Three is more than just a number. It is the beginning of another beautiful chapter — full of new places, new memories, big dreams and tiny moments worth remembering.
-
 I hope you always keep that spark that makes you💥,
-
 May you laugh loudly, dream fearlessly and find a little magic in ordinary days🌟.
-
+Some ups and downs may happen, but god always with you💫.
 Here's to Chapter 23...✨
 With lots of happiness and warm wishes💙`,
 
@@ -119,9 +117,9 @@ const orbEvents=[
   "A tiny woke up of your birthday Nageswari. 🫣",
   "The light remembers something… that we never 🌙",
   "A secret star just appeared in life. ⭐",
-  "The orb is getting brighter like your smile…",
-  "Something magical is getting closer to your heart. 🪄",
-  "Find look after inside yourself . 👀",
+  "The orb is getting brighter like your smile…😉",
+  "Something magic is getting closer to your heart. 🪄",
+  "Find look after person inside yourself. 👀",
   "Inches away from witnessing show! 💫"
 ];
 $("#orb").onclick=()=>{
