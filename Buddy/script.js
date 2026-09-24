@@ -116,13 +116,13 @@ $$(".portal").forEach(b=>b.onclick=()=>{
 // ORB — every tap creates a different event, not just a pulse
 let orbCount=0;
 const orbEvents=[
-  "A tiny spark woke up. ✨",
-  "The light remembers something… 🌙",
-  "A secret star just appeared. ⭐",
-  "The orb is getting brighter…",
-  "Something magical is getting closer. 🪄",
-  "One more tap… don't stop now. 👀",
-  "The wish is awake! 💫"
+  "A tiny woke up of your birthday Nageswari. 🫣",
+  "The light remembers something… that we never 🌙",
+  "A secret star just appeared in life. ⭐",
+  "The orb is getting brighter like your smile…",
+  "Something magical is getting closer to your heart. 🪄",
+  "Find look after inside yourself . 👀",
+  "Inches away from witnessing show! 💫"
 ];
 $("#orb").onclick=()=>{
   orbCount++;
