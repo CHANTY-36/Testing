@@ -3,7 +3,7 @@
 */
 const CONFIG = {
   name: "To The Topper",
-  finalPhoto: "assets/photos/birthday-person.jpg",
+  finalPhoto: "https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Images/Screenshot_20260923-192554%7E2.jpg",
 
   message: `Happiest Birthday Nageswari! 🎂
 On 26-09-2004 a spark risers with great courage and attitude!
