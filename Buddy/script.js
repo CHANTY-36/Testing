@@ -15,13 +15,14 @@ Here's to Chapter 23...✨
 With lots of happiness and warm wishes💙`,
 
   photos: [
-    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/IMG-20260922-WA0006.jpg",caption:"A memory that deserves its own little star."},
-    {src:"",caption:"One moment. A thousand feelings."},
-    {src:"",caption:"Some memories never really leave us."},
-    {src:"",caption:"A page worth turning back to."},
-    {src:"",caption:"The kind of moment you wish you could pause."},
-    {src:"",caption:"More memories are waiting to be made."},
-    {src:"",caption:"And this story is only getting started."}
+    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Images/IMG-20260925-WA0001.jpg",caption:"A memory that deserves its own little star⭐"},
+    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Images/Screenshot_20260923-192432%7E2.jpg",caption:"One moment. A thousand feelings✨"},
+    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Images/Screenshot_20260923-192537%7E2.jpg",caption:"Some memories never really leave us😉"},
+    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Images/IMG-20260925-WA0004.jpg",caption:"A page worth turning back to🫣"},
+    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Images/IMG-20260925-WA0005.jpg",caption:"The kind of moment you wish you could pause💫"},
+    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Images/IMG-20260922-WA0003.jpg",caption:"More memories are waiting to be made😅"},
+    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Images/IMG-20260925-WA0003%7E2.jpg",caption:"You made outfit more attractive🌟"},
+    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Images/IMG-20260925-WA0006.jpg",caption:"Wishing more smiles lies on your face💙"}
   ],
 
   // These are interest-style questions. Change the correct answers if needed.
