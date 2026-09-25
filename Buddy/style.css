@@ -62,11 +62,11 @@ h1 span,h2 span{color:var(--pink)}
 .gift.open .gift-message{opacity:1;transform:translate(-50%,-45px) scale(1)}
 
 /* MEMORY */
-.memory-shell{width:min(420px,92vw);margin-top:25px}.memory-card{touch-action:pan-y;position:relative;border-radius:28px;overflow:hidden;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 90px rgba(0,0,0,.35)}
-.memory-number{position:absolute;z-index:2;top:15px;right:15px;padding:7px 10px;border-radius:999px;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);font-size:12px}
-.memory-photo{height:330px;display:grid;place-items:center;background:radial-gradient(circle at 30% 20%,#ff75b4,#4b2b87 45%,#111);background-size:cover;background-position:center}
+.memory-shell{width:min(520px,92vw);margin-top:10px}.memory-card{touch-action:pan-y;position:relative;border-radius:28px;overflow:hidden;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 90px rgba(0,0,0,.35)}
+.memory-number{position:absolute;z-index:2;top:5px;right:15px;padding:7px 10px;border-radius:999px;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);font-size:12px}
+.memory-photo{height:530px;display:grid;place-items:center;background:radial-gradient(circle at 30% 20%,#ff75b4,#4b2b87 45%,#111);background-size:cover;background-position:center}
 .photo-placeholder{font-size:13px;letter-spacing:.15em;color:rgba(255,255,255,.7)}
-.memory-caption{padding:18px 20px 22px;font-family:"Caveat",cursive;font-size:25px}
+.memory-caption{padding:10px 12px 15px;font-family:"Caveat",cursive;font-size:16px}
 .swipe-controls{display:flex;align-items:center;justify-content:space-between;margin-top:14px}.round-btn{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.13)}
 .dots{display:flex;gap:5px}.dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25)}.dot.active{width:20px;border-radius:10px;background:var(--pink)}
 .hint{color:#95879d;font-size:11px;margin-top:10px}
@@ -89,7 +89,7 @@ h1 span,h2 span{color:var(--pink)}
 .big-count{font-family:"Playfair Display";font-size:clamp(120px,30vw,250px);line-height:.9;color:white;text-shadow:0 0 45px var(--pink),0 0 100px var(--violet);animation:countPulse 1s ease-in-out infinite}
 @keyframes countPulse{50%{transform:scale(1.12)}}
 .letter{width:min(680px,92vw);padding:30px;border-radius:30px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);box-shadow:0 25px 80px rgba(0,0,0,.2)}
-.typewriter{min-height:210px;margin-top:20px;text-align:left;white-space:pre-wrap;color:#f8eefa;font-family:"Caveat",cursive;font-size:clamp(22px,5vw,31px);line-height:1.35}.hidden{display:none}
+.typewriter{min-height:210px;margin-top:20px;text-align:left;white-space:pre-wrap;color:#f8eefa;font-family:"Calibri",cursive;font-size:clamp(22px,5vw,31px);line-height:1.35}.hidden{display:none}
 
 /* FINAL */
 .final-scene{background:radial-gradient(circle at 50% 50%,rgba(154,108,255,.15),transparent 42%);overflow:hidden}
