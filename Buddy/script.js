@@ -3,7 +3,7 @@
 */
 const CONFIG = {
   name: "To The Topper",
-  finalPhoto: "https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Images/Screenshot_20260923-192554%7E2.jpg",
+  finalPhoto: "https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Music/img8.jpg",
 
   message: `Happiest Birthday Nageswari! 🎂
 On 26-09-2004 a spark risers with great courage and attitude!
@@ -16,11 +16,11 @@ With lots of happiness and warm wishes💙`,
 
   photos: [
     {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Images/IMG-20260925-WA0001.jpg",caption:"A memory that deserves its own little star⭐"},
-    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Images/Screenshot_20260923-192432%7E2.jpg",caption:"One moment. A thousand feelings✨"},
-    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Images/Screenshot_20260923-192537%7E2.jpg",caption:"Some memories never really leave us😉"},
-    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Images/IMG-20260925-WA0004.jpg",caption:"A page worth turning back to🫣"},
+    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Music/img1.jpg",caption:"Camera man deserves credit😉"},
+    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Music/img2.jpg",caption:"Some memories never really leave us✨"},
+    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Music/img4.jpg",caption:"A page worth turning back to🫣"},
     {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Music/IMG-20260925-WA0005%7E3.jpg",caption:"The kind of moment you wish you could pause💫"},
-    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Images/IMG-20260922-WA0003.jpg",caption:"More memories are waiting to be made😅"},
+    {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Music/img3.jpg",caption:"More memories are waiting to be made😅"},
     {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Music/IMG-20260925-WA0003%7E2.jpg",caption:"You made outfit more attractive🌟"},
     {src:"https://raw.githubusercontent.com/cha-nty/happybirthday-/refs/heads/main/Images/IMG-20260925-WA0006.jpg",caption:"Wishing more smiles lies on your face💙"}
   ],
