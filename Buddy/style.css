@@ -45,7 +45,7 @@ h1 span,h2 span{color:var(--pink)}
 @keyframes sparkFly1{0%{opacity:0;transform:scale(.2) translate(0,0)}30%{opacity:1}100%{opacity:0;transform:scale(1.5) translate(-45px,-50px)}}
 @keyframes sparkFly2{0%{opacity:0;transform:scale(.2)}30%{opacity:1}100%{opacity:0;transform:scale(1.4) translate(50px,-35px)}}
 @keyframes sparkFly3{0%{opacity:0}30%{opacity:1}100%{opacity:0;transform:translate(20px,50px) scale(1.5)}}
-.orb-event{height:26px;color:var(--gold);font-family:"Caveat",cursive;font-size:22px;opacity:.95}
+.orb-event{height:36px;color:var(--gold);font-family:"Caveat",cursive;font-size:22px;opacity:.95}
 
 /* GIFT */
 .gift-stage{position:relative;height:215px;width:260px;display:grid;place-items:center}
