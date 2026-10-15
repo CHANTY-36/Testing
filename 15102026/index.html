@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f1e8"><title>A Little More Magic — Birthday Story</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="paper-grain"></div><div class="progress-track"><span id="progress"></span></div>
+<main id="story">
+<section class="chapter active" id="chapter-0">
+<p class="eyebrow">A LITTLE SOMETHING, JUST FOR YOU</p><div class="sun-mark">✳</div>
+<h1>Today is<br><em>your kind of magic.</em></h1>
+<p class="intro">A small journey through lovely moments, happy surprises, and all the good things still waiting for you.</p>
+<button class="button" data-next="1">Open your story <span>↗</span></button><p class="tiny-note">Best enjoyed slowly, with a smile.</p>
+</section>
+<section class="chapter" id="chapter-1">
+<p class="eyebrow">CHAPTER 01 · THE LITTLE THINGS</p><h2>Happiness lives<br>in the <em>details.</em></h2>
+<div class="little-grid">
+<div class="little-card"><span>☀</span><b>Slow mornings</b><small>Nothing to rush.</small></div><div class="little-card"><span>♫</span><b>Favourite songs</b><small>One more replay.</small></div>
+<div class="little-card"><span>✿</span><b>Unexpected laughs</b><small>The best kind.</small></div><div class="little-card"><span>☕</span><b>Comfort moments</b><small>Just being you.</small></div>
+</div><p class="chapter-note">May your next chapter be full of little things that turn into big memories.</p><button class="button" data-next="2">Next chapter <span>→</span></button>
+</section>
+<section class="chapter" id="chapter-2">
+<p class="eyebrow">CHAPTER 02 · THE MEMORY WALL</p><h2>Moments worth<br><em>keeping close.</em></h2><p class="section-copy">Add your favourite photos to turn this page into a little gallery of memories.</p>
+<div class="gallery">
+<figure><img alt="Memory photo 1" data-photo="0"><figcaption>Little moments, big feelings.</figcaption></figure>
+<figure><img alt="Memory photo 2" data-photo="1"><figcaption>A day to remember.</figcaption></figure>
+<figure><img alt="Memory photo 3" data-photo="2"><figcaption>One for the scrapbook.</figcaption></figure>
+<figure><img alt="Memory photo 4" data-photo="3"><figcaption>More memories to come.</figcaption></figure>
+</div><button class="button" data-next="3">Keep going <span>→</span></button>
+</section>
+<section class="chapter" id="chapter-3">
+<p class="eyebrow">CHAPTER 03 · A TINY GAME</p><h2>Catch a little<br><em>good luck.</em></h2><p class="section-copy">Tap the floating stars before they disappear. Collect 8 to unlock your wish.</p>
+<div class="game-top"><span>STARS CAUGHT</span><strong><b id="score">0</b> / 8</strong></div><div class="star-field" id="starField" aria-label="Tap the stars to collect them"></div>
+<p id="gameMessage" class="game-message">Ready when you are ✨</p><button class="button hidden" id="gameNext" data-next="4">See your wish <span>→</span></button><button class="text-button" id="startGame">Start catching stars</button>
+</section>
+<section class="chapter" id="chapter-4">
+<p class="eyebrow">CHAPTER 04 · A WISH FOR YOU</p><div class="wish-seal">✦</div><h2>May good things<br><em>find their way to you.</em></h2>
+<div class="wish-list"><p><span>01</span>The courage to chase what excites you.</p><p><span>02</span>People who make ordinary days brighter.</p><p><span>03</span>New places, fresh starts, and happy surprises.</p><p><span>04</span>A thousand reasons to be proud of yourself.</p></div>
+<button class="button" data-next="5">One last page <span>→</span></button>
+</section>
+<section class="chapter finale" id="chapter-5">
+<p class="eyebrow">THE BEGINNING OF ANOTHER CHAPTER</p><div class="confetti">✦　✧　✳　✧　✦</div><h1>Happy Birthday,<br><em id="birthdayName">Beautiful Human!</em></h1>
+<div class="final-photo-frame"><img id="finalPhoto" alt="Birthday person"><span id="photoPlaceholder">YOUR PHOTO HERE</span></div>
+<p class="final-message">Keep being wonderfully, unmistakably you. May this year bring you more joy than you expected and more memories than you can count.</p><p class="signature">With love, always ✿</p><button class="button" id="replay">Read it again ↻</button>
+</section>
+<nav class="chapter-nav"><button id="back" disabled>← Back</button><span id="chapterCount">INTRO</span><button id="forward">Next →</button></nav>
+</main><script src="script.js"></script></body></html>
