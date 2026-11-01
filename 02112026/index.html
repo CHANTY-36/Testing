@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#071521">
+<title>Ember & Ever — A Birthday Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-aurora">
+<div class="ambient" id="ambient"></div><div class="toast" id="toast"></div>
+<main id="app">
+<section class="scene active intro" id="scene-0">
+ <div class="intro-mark">✦ &nbsp; AN EXPERIENCE IN YOUR HONOUR &nbsp; ✦</div>
+ <div class="intro-orbit"><span></span><i></i><b></b></div>
+ <p class="kicker">A little world, made for one person</p>
+ <h1>Tonight, the story<br>has <em>your name</em> on it.</h1>
+ <p class="intro-copy">No instructions. No expectations. Just a few unexpected moments, a little adventure, and a celebration waiting at the end.</p>
+ <button class="btn primary" data-next="1">Step inside <span>↗</span></button>
+ <div class="intro-foot">TAKE YOUR TIME · ENJOY EVERY MOMENT</div>
+</section>
+<section class="scene" id="scene-1">
+ <div class="chapter-head"><span class="chapter-tag">01 / THE FIRST DECISION</span><h2>Pick the world<br>you want to <em>enter.</em></h2><p>Choose the atmosphere that feels like you. It will transform the colours, glow and motion throughout the entire journey.</p></div>
+ <div class="theme-options">
+  <button class="theme-choice aurora-choice" data-theme="aurora"><span class="choice-art fire-art"><i></i><b></b><strong>✦</strong></span><span class="choice-title">MIDNIGHT AURORA</span><small>Cool · luminous · dreamlike</small><span class="choice-cta">Choose this world →</span></button>
+  <button class="theme-choice velvet-choice" data-theme="velvet"><span class="choice-art casual-art"><i></i><b></b><strong>◈</strong></span><span class="choice-title">VELVET ORCHID</span><small>Elegant · dreamy · graceful</small><span class="choice-cta">Choose this world →</span></button>
+ </div>
+ <p class="choice-note" id="theme-note">Same chapters. Two completely different visual worlds.</p>
+</section>
+<section class="scene activity-scene" id="scene-2">
+ <div class="chapter-head"><span class="chapter-tag">02 / THE CONSTELLATION</span><h2>Connect the stars.<br><em>Reveal your sign.</em></h2><p>Press the first star and drag your finger through the constellation in the right order. No tapping one by one — draw one continuous line.</p></div>
+ <div class="constellation-board" id="constellation-board" aria-label="Drag through the five stars in order">
+  <svg class="constellation-lines" id="constellation-lines" viewBox="0 0 320 280" preserveAspectRatio="none"><polyline id="constellation-path" points="" /></svg>
+  <button class="constellation-node n1" data-node="0" aria-label="First star">✦</button><button class="constellation-node n2" data-node="1" aria-label="Second star">✧</button><button class="constellation-node n3" data-node="2" aria-label="Third star">✦</button><button class="constellation-node n4" data-node="3" aria-label="Fourth star">✧</button><button class="constellation-node n5" data-node="4" aria-label="Fifth star">✦</button>
+  <div class="constellation-complete" id="constellation-complete">✧</div>
+ </div>
+ <div class="activity-status" id="constellation-status">Start at the brightest star · 0 / 5</div><button class="btn outline small" id="constellation-reset">Try the constellation again</button>
+</section>
+<section class="scene activity-scene" id="scene-3">
+ <div class="chapter-head"><span class="chapter-tag">03 / THE LIGHT MAZE</span><h2>Turn the pieces.<br><em>Bring it together.</em></h2><p>Rotate each glowing path tile until the light can travel from the source to the little portal. Every turn matters.</p></div>
+ <div class="maze-hud"><span>◉ SOURCE</span><span id="maze-turns">0 TURNS</span><span>PORTAL ◉</span></div>
+ <div class="light-maze" id="light-maze" aria-label="Rotate the path tiles to connect the source to the portal"></div>
+ <p class="activity-status" id="maze-status">Connect the path to wake the portal.</p><button class="btn outline small" id="maze-reset">Shuffle the tiles</button>
+</section>
+<section class="scene memory-scene" id="scene-4">
+ <div class="chapter-head"><span class="chapter-tag">04 / THE MEMORY GALLERY</span><h2>Little moments.<br><em>Forever yours.</em></h2><p>Seven frames from a collection that deserves to be revisited.</p></div>
+ <div class="memory-shell"><div class="memory-card" id="memory-card"><div class="memory-number" id="memory-number">01 — 07</div><div class="memory-photo" id="memory-photo"><div class="photo-placeholder">ADD PHOTO 01</div></div><div class="memory-caption" id="memory-caption">A moment worth keeping close.</div></div>
+ <div class="memory-controls"><button class="round-btn" id="memory-prev" aria-label="Previous photo">←</button><div class="dots" id="memory-dots"></div><button class="round-btn" id="memory-next" aria-label="Next photo">→</button></div><p class="hint">Swipe the photo or use the arrows</p><button class="btn primary small hidden" id="memory-continue">Continue the journey →</button></div>
+</section>
+<section class="scene puzzle-scene" id="scene-5">
+ <div class="chapter-head"><span class="chapter-tag">05 / THE CRYSTAL VAULT</span><h2>Find the hidden<br><em>crystal pattern.</em></h2><p>Three crystals are hidden beneath the tiles. You have 9 moves to find them. Each reveal gives a clue — warmer means closer. Can you unlock the vault?</p></div>
+ <div class="vault-hud"><span>MOVES LEFT <b id="moves-left">9</b></span><span>CRYSTALS <b id="crystals-found">0 / 3</b></span></div>
+ <div class="crystal-grid" id="crystal-grid" aria-label="Choose tiles to find three hidden crystals"></div>
+ <div class="crystal-status" id="crystal-status">Choose any tile to begin your search.</div>
+ <button class="btn primary small" id="crystal-restart">Start a new search</button>
+</section>
+<section class="scene discover-scene" id="scene-6">
+ <div class="chapter-head"><span class="chapter-tag">06 / THE YOU FILES</span><h2>Let’s discover<br>your kind of <em>magic.</em></h2><p>No right answers. Choose what feels most like you — this little profile is all about your personality.</p></div>
+ <div class="discover-card"><div class="discover-progress"><span id="discover-progress"></span></div><div class="discover-count" id="discover-count">01 / 05</div><h3 id="discover-question">Your ideal free day looks like…</h3><div class="discover-options" id="discover-options"></div><p class="discover-feedback" id="discover-feedback">Pick the one that feels closest.</p></div>
+ <div class="profile-reveal hidden" id="profile-reveal"><div class="profile-icon">✧</div><p>YOUR LITTLE PERSONALITY SNAPSHOT</p><h3 id="profile-title">The Curious Soul</h3><div id="profile-traits"></div><button class="btn primary small" id="profile-continue">That’s me. Continue →</button></div>
+</section>
+<section class="scene countdown-scene" id="scene-7">
+ <span class="chapter-tag">07 / BEFORE THE WISH</span><div class="countdown-ring"><span id="countdown">3</span></div><h2>One breath.<br>One wish. <em>One more surprise.</em></h2><p>The next page is meant to be read slowly.</p>
+</section>
+<section class="scene letter-scene" id="scene-8">
+ <div class="letter-card"><span class="chapter-tag">08 / A NOTE FOR YOU</span><div class="letter-seal">✦</div><h2>Some words<br>are <em>just for you.</em></h2><div class="typewriter" id="typewriter"></div><button class="btn primary small hidden" id="message-next">Open the final scene →</button></div>
+</section>
+<section class="scene final-scene" id="scene-9">
+ <canvas id="fireworks"></canvas><div class="final-content">
+  <div class="final-overline">THE WORLD CELEBRATES YOU</div><div class="final-number">✦ 23 ✦</div><h2>HAPPY<br><em>BIRTHDAY</em></h2><p class="final-name" id="final-name">To The Topper</p><p class="final-quote">May your next chapter be louder with laughter, richer in memories, and brighter than every dream you dare to chase.</p>
+  <div class="photo-triptych"><div class="side-photo left-photo" id="final-side-left"><span>MEMORY 01</span><b>✧</b></div><div class="center-photo"><img id="final-photo" alt="Birthday portrait"><div id="final-photo-placeholder">YOUR PHOTO</div></div><div class="side-photo right-photo" id="final-side-right"><span>MEMORY 07</span><b>✦</b></div></div>
+  <p class="photo-note">Three frames. One beautiful story.</p><div class="final-line"></div><div class="reaction-area" id="reaction-area"><p>Did this little world make you smile?</p><div><button class="btn primary small" id="like-btn">It did ❤️</button><button class="btn outline small" id="dislike-btn">Let's try again</button></div></div><p class="reaction-message" id="reaction-message"></p><button class="replay" id="replay">↻ &nbsp; Revisit the journey</button>
+ </div>
+</section>
+</main>
+<audio id="birthdayMusic" loop preload="none"><source src="https://github.com/cha-nty/happybirthday-/raw/refs/heads/main/paulyudin-cartoon-cartoons-music-595946.mp3" type="audio/mpeg"></audio>
+<script src="script.js"></script>
+</body></html>
