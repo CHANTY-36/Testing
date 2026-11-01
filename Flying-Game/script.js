@@ -32,7 +32,7 @@ const GAME_OVER_AUDIO_URL = "https://github.com/CHANTY-36/Testing/raw/refs/heads
 
 /* ---------- GAME SETTINGS ---------- */
 const TOTAL_PILLARS_TO_WIN = 10;
-const WORLD = { width: 800, height: 700, groundHeight: 54 };
+const WORLD = { width: 1000, height: 700, groundHeight: 54 };
 const DIFFICULTY = {
   easy:   { speed: 2.50, gap: 200, gravity: 0.25, flap: -6.5 },
   medium: { speed: 3.00, gap: 175, gravity: 0.30, flap: -6.8 },
@@ -63,7 +63,7 @@ function createAudio(name, url, loop = false, volume = 0.65) {
 }
 createAudio("intro", INTRO_AUDIO_URL, true, 0.35);
 createAudio("profile", PROFILE_SELECTION_AUDIO_URL, false, 0.55);
-createAudio("nearMiss", NEAR_MISS_AUDIO_URL, false, 0.75);
+createAudio("nearMiss", NEAR_MISS_AUDIO_URL, false, 0.05);
 createAudio("pillar", PILLAR_CROSSED_AUDIO_URL, false, 0.7);
 createAudio("victory", VICTORY_AUDIO_URL, false, 0.8);
 createAudio("gameOver", GAME_OVER_AUDIO_URL, false, 0.8);
