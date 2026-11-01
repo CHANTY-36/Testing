@@ -63,7 +63,7 @@ function createAudio(name, url, loop = false, volume = 0.65) {
 }
 createAudio("intro", INTRO_AUDIO_URL, true, 0.35);
 createAudio("profile", PROFILE_SELECTION_AUDIO_URL, false, 0.55);
-createAudio("nearMiss", NEAR_MISS_AUDIO_URL, false, 1.05);
+createAudio("nearMiss", NEAR_MISS_AUDIO_URL, false, 0.99);
 createAudio("pillar", PILLAR_CROSSED_AUDIO_URL, false, 0.7);
 createAudio("victory", VICTORY_AUDIO_URL, false, 0.8);
 createAudio("gameOver", GAME_OVER_AUDIO_URL, false, 0.8);
