@@ -34,9 +34,9 @@ const GAME_OVER_AUDIO_URL = "https://github.com/CHANTY-36/Testing/raw/refs/heads
 const TOTAL_PILLARS_TO_WIN = 10;
 const WORLD = { width: 800, height: 700, groundHeight: 54 };
 const DIFFICULTY = {
-  easy:   { speed: 2.55, gap: 190, gravity: 0.30, flap: -6.5 },
-  medium: { speed: 3.15, gap: 166, gravity: 0.34, flap: -6.8 },
-  hard:   { speed: 3.85, gap: 148, gravity: 0.38, flap: -7.1 }
+  easy:   { speed: 2.50, gap: 200, gravity: 0.25, flap: -6.5 },
+  medium: { speed: 3.00, gap: 175, gravity: 0.30, flap: -6.8 },
+  hard:   { speed: 3.50, gap: 150, gravity: 0.35, flap: -7.1 }
 };
 
 const $ = (id) => document.getElementById(id);
