@@ -1,304 +1,877 @@
-/* CHAPTER 20 — PERSONALIZED BIRTHDAY STORY
-   Change CONFIG below. Put your final photo at the path in finalPhoto.
-*/
-const CONFIG = {
-  name: "Someone Special",
-  finalPhoto: "assets/photos/birthday-person.jpg",
+/* ==========================================
+   AURORA FLIGHT — GAME ENGINE
+   ========================================== */
 
-  message: `Happy Birthday Nageswari💙! 🎂
+const $ = id => document.getElementById(id);
 
-Twenty Three is more than just a number. It is the beginning of another beautiful chapter — full of new places, new memories, big dreams and tiny moments worth remembering.
+const DEFAULT_AVATAR = "assets/default-character.svg";
 
-I hope you always keep that spark that makes you, 
-
-May you laugh loudly, dream fearlessly and find a little magic in ordinary days.
-
-Here's to Chapter 23. ✨
-With lots of happiness and warm wishes ❤️`,
-
-  photos: [
-    {src:"",caption:"A memory that deserves its own little star."},
-    {src:"",caption:"One moment. A thousand feelings."},
-    {src:"",caption:"Some memories never really leave us."},
-    {src:"",caption:"A page worth turning back to."},
-    {src:"",caption:"The kind of moment you wish you could pause."},
-    {src:"",caption:"More memories are waiting to be made."},
-    {src:"",caption:"And this story is only getting started."}
-  ],
-
-  // These are interest-style questions. Change the correct answers if needed.
-  quiz: [
-    {
-      q:"What do Nageswari like to do most in your free time?",
-      answers:["Watching phone 📱","Listening to music 🎧","Watching movies 🎬","Sitting alone 🌙"],
-      correct:1
-    },
-    {
-      q:"What would Nageswari enjoy doing more?",
-      answers:["Travelling ✈️","Cooking 🍳","Playing 🎮","Trying something completely new ✨"],
-      correct:0
-    },
-      {
-      q:"What does Nageswari Likes more?",
-      answers:["Cinema","Football","Cricket","All of the above"],
-      correct:3
-    },
-    {
-      q:"Which kind of day sounds most like you?",
-      answers:["A peaceful day alone 🌙","A fun day with friends 🫶","An adventure somewhere new 🌍","A cozy movie/music day 🎶"],
-      correct:2
-    }
-  ]
+const AUDIO = {
+    intro: "assets/audio/intro-theme.mp3",
+    profile: "assets/audio/profile-selection.mp3",
+    gameplay: "assets/audio/gameplay-theme.mp3",
+    near: "assets/audio/near-miss.mp3",
+    crossed: "assets/audio/pillar-crossed.mp3",
+    victory: "assets/audio/victory.mp3",
+    gameover: "assets/audio/game-over.mp3"
 };
 
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-let currentScene=0,audioStarted=false;
+const TOTAL_PILLARS = 10;
 
-function goToScene(n){
-  const old=$(`#scene-${currentScene}`),next=$(`#scene-${n}`);
-  if(!next||n===currentScene)return;
-  old.classList.remove("active");old.classList.add("exit");
-  setTimeout(()=>old.classList.remove("exit"),800);
-  next.classList.add("active");currentScene=n;
-  if(n===7)startCountdown();
-  if(n===8)startTypewriter();
-  if(n===9)startFireworks();
-}
-function startAudio(){
-  if(audioStarted)return;
-  audioStarted=true;
-  $("#birthdayMusic")?.play().catch(()=>{});
-  $("#soundHint").style.opacity="0";
-}
-document.addEventListener("pointerdown",startAudio,{once:true});
-$$("[data-next]").forEach(b=>b.onclick=()=>{startAudio();goToScene(+b.dataset.next)});
+const THEMES = [
+    {name:"Aurora Skies",sky1:"#09263d",sky2:"#164c63",glow:"#75f4d5",pipe:"#3ad9b6",pipe2:"#168b87"},
+    {name:"Sunset Ember",sky1:"#421c3e",sky2:"#bd593f",glow:"#ffd18c",pipe:"#ffb35c",pipe2:"#bd5a48"},
+    {name:"Moonlit Lagoon",sky1:"#101e4d",sky2:"#245c83",glow:"#9edcff",pipe:"#65c7f2",pipe2:"#3475b5"},
+    {name:"Jade Forest",sky1:"#0b382e",sky2:"#26745a",glow:"#b8f5a4",pipe:"#a2df7b",pipe2:"#39895a"},
+    {name:"Golden Temple",sky1:"#402b17",sky2:"#a86d2d",glow:"#ffe49a",pipe:"#ffdb73",pipe2:"#b47a2b"},
+    {name:"Violet Nebula",sky1:"#251747",sky2:"#653c91",glow:"#e3b7ff",pipe:"#c69cff",pipe2:"#7954b6"},
+    {name:"Crystal Glacier",sky1:"#102d45",sky2:"#438aa2",glow:"#c7f5ff",pipe:"#8ce8ed",pipe2:"#3b9eb1"},
+    {name:"Coral Horizon",sky1:"#4a243e",sky2:"#c56b69",glow:"#ffd2c1",pipe:"#ffb0a0",pipe2:"#bf6377"},
+    {name:"Electric Dream",sky1:"#111b42",sky2:"#354c9b",glow:"#a9baff",pipe:"#8ba5ff",pipe2:"#4d5fc0"},
+    {name:"Dawn of Victory",sky1:"#3d2440",sky2:"#b77d54",glow:"#fff0b8",pipe:"#ffe18a",pipe2:"#c18b4b"}
+];
 
-// PORTALS
-$$(".portal").forEach(b=>b.onclick=()=>{
-  $("#portal-result").textContent=b.dataset.portal==="A"?"The moon chose you. ✦":"The dream opened. ∞";
-  setTimeout(()=>goToScene(2),900);
+const LEVELS = {
+    easy:   {speed:2.7, gap:205, gravity:.34, flap:-7.0},
+    medium: {speed:3.35,gap:178, gravity:.39, flap:-7.4},
+    hard:   {speed:4.0, gap:157, gravity:.43, flap:-7.8}
+};
+
+const canvas = $("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+let selectedAvatar = DEFAULT_AVATAR;
+let customPhoto = null;
+let selectedProfile = "default";
+let profileReady = false;
+
+let muted = false;
+let audioUnlocked = false;
+let currentMusic = null;
+let currentMusicName = "";
+let activeSfx = null;
+let sfxToken = 0;
+let introPlayed = false;
+
+const sounds = {};
+
+Object.entries(AUDIO).forEach(([name, path]) => {
+    const audio = new Audio(path);
+    audio.preload = "auto";
+
+    if (["intro", "profile", "gameplay"].includes(name)) {
+        audio.loop = true;
+    }
+
+    sounds[name] = audio;
 });
 
-// ORB — every tap creates a different event, not just a pulse
-let orbCount=0;
-const orbEvents=[
-  "A tiny spark woke up. ✨",
-  "The light remembers something… 🌙",
-  "A secret star just appeared. ⭐",
-  "The orb is getting brighter…",
-  "Something magical is getting closer. 🪄",
-  "One more tap… don't stop now. 👀",
-  "The wish is awake! 💫"
-];
-$("#orb").onclick=()=>{
-  orbCount++;
-  $("#orb-count").textContent=orbCount;
-  $("#orb-event").textContent=orbEvents[orbCount-1];
-  const orb=$("#orb");
-  orb.classList.remove("orb-active");void orb.offsetWidth;orb.classList.add("orb-active");
-  createOrbBurst();
-  if(orbCount>=7)setTimeout(()=>goToScene(3),800);
-};
-function createOrbBurst(){
-  const orb=$("#orb"),r=orb.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
-  for(let i=0;i<9;i++){
-    const s=document.createElement("span");
-    s.textContent=["✦","✧","•","✨"][Math.floor(Math.random()*4)];
-    s.style.cssText=`position:fixed;z-index:100;left:${cx}px;top:${cy}px;color:hsl(${180+Math.random()*150},100%,75%);font-size:${10+Math.random()*13}px;pointer-events:none`;
-    document.body.appendChild(s);
-    const a=Math.random()*Math.PI*2,d=45+Math.random()*90;
-    s.animate([{transform:"translate(-50%,-50%) scale(.2)",opacity:1},{transform:`translate(${Math.cos(a)*d}px,${Math.sin(a)*d}px) scale(1.5)`,opacity:0}],{duration:650,easing:"cubic-bezier(.1,.7,.2,1)"});
-    setTimeout(()=>s.remove(),700);
-  }
-}
 
-// GIFT — exactly two taps
-let giftCount=0;
-$("#gift").onclick=()=>{
-  if(giftCount>=2)return;
-  giftCount++;
-  $("#gift-count").textContent=giftCount;
-  $("#gift").animate([{transform:"scale(1)"},{transform:"scale(1.06) rotate(-2deg)"},{transform:"scale(1)"}],{duration:300});
-  if(giftCount===2){
-    $("#gift").classList.add("open");
-    burstConfetti();
-    showToast("Here we go! ✨");
-    setTimeout(()=>goToScene(4),1300);
-  }
-};
+/* ==========================================
+   AUDIO MANAGER
+   One SFX channel only.
+   Collision > Pillar Crossed > Near Miss.
+   ========================================== */
 
-// MEMORY
-let memoryIndex=0;
-function renderMemory(){
-  const item=CONFIG.photos[memoryIndex];
-  $("#memory-number").textContent=String(memoryIndex+1).padStart(2,"0");
-  $("#memory-caption").textContent=item.caption;
-  const photo=$("#memory-photo");
-  if(item.src){photo.style.backgroundImage=`url("${item.src}")`;photo.innerHTML=""}
-  else{photo.style.backgroundImage="";photo.innerHTML=`<div class="photo-placeholder">YOUR PHOTO ${String(memoryIndex+1).padStart(2,"0")}</div>`}
-  $("#memory-dots").innerHTML=CONFIG.photos.map((_,i)=>`<span class="dot ${i===memoryIndex?"active":""}"></span>`).join("");
-}
-function memoryMove(dir){
-  memoryIndex=(memoryIndex+dir+CONFIG.photos.length)%CONFIG.photos.length;
-  $("#memory-card").animate([{transform:`translateX(${dir>0?25:-25}px)`,opacity:.25},{transform:"translateX(0)",opacity:1}],{duration:360});
-  renderMemory();
-  if(memoryIndex===CONFIG.photos.length-1)setTimeout(()=>goToScene(5),900);
-}
-$("#memory-next").onclick=()=>memoryMove(1);$("#memory-prev").onclick=()=>memoryMove(-1);
-let touchStartX=0;
-$("#memory-card").ontouchstart=e=>touchStartX=e.changedTouches[0].clientX;
-$("#memory-card").ontouchend=e=>{const dx=e.changedTouches[0].clientX-touchStartX;if(Math.abs(dx)>40)memoryMove(dx<0?1:-1)};
-renderMemory();
-
-// GAME — 30 stars, more than 3 misses = restart
-const game=$("#star-game"),player=$("#player");
-let gameRunning=false,score=0,misses=0,timeLeft=20,stars=[],gameTimer,spawnTimer,rafId;
-function movePlayer(x,y){
-  const r=game.getBoundingClientRect();
-  player.style.left=`${Math.max(25,Math.min(r.width-25,x-r.left))}px`;
-  player.style.top=`${Math.max(25,Math.min(r.height-25,y-r.top))}px`;
-}
-game.onpointermove=e=>{if(gameRunning)movePlayer(e.clientX,e.clientY)};
-game.onpointerdown=e=>{if(gameRunning)movePlayer(e.clientX,e.clientY)};
-
-function spawnStar(){
-  if(!gameRunning)return;
-  const el=document.createElement("div");el.className="falling-star";
-  el.style.left=`${Math.random()*90+5}%`;el.style.top="-30px";game.appendChild(el);
-  stars.push({el,y:-50,speed:3.5+Math.random()*3.5});
-}
-function gameLoop(){
-  if(!gameRunning)return;
-  const pr=player.getBoundingClientRect();
-  for(let i=stars.length-1;i>=0;i--){
-    const s=stars[i];s.y+=s.speed;s.el.style.top=`${s.y}px`;
-    const sr=s.el.getBoundingClientRect();
-    const dx=sr.left+sr.width/2-(pr.left+pr.width/2),dy=sr.top+sr.height/2-(pr.top+pr.height/2);
-    if(Math.hypot(dx,dy)<40){
-      s.el.remove();stars.splice(i,1);score++;$("#score").textContent=score;burstAt(sr.left+sr.width/2,sr.top+sr.height/2);
-      if(score>=50)endGame(true);
-    }else if(s.y>game.clientHeight+40){
-      s.el.remove();stars.splice(i,1);misses++;$("#misses").textContent=misses;
-      if(misses>1){endGame(false);return}
+function stopMusic() {
+    if (currentMusic) {
+        currentMusic.pause();
+        currentMusic.currentTime = 0;
     }
-  }
-  rafId=requestAnimationFrame(gameLoop);
-}
-function resetStars(){
-  stars.forEach(s=>s.el.remove());stars=[];score=0;misses=0;timeLeft=20;
-  $("#score").textContent="0";$("#misses").textContent="0";$("#time").textContent="35";
-}
-function startGame(){
-  if(gameRunning)return;
-  resetStars();gameRunning=true;$("#game-message").style.display="none";$("#start-game").textContent="Game running…";
-  spawnTimer=setInterval(spawnStar,520);
-  gameTimer=setInterval(()=>{timeLeft--;$("#time").textContent=timeLeft;if(timeLeft<=0)endGame(false)},1000);
-  requestAnimationFrame(gameLoop);
-}
-function endGame(won){
-  if(!gameRunning)return;
-  gameRunning=false;clearInterval(spawnTimer);clearInterval(gameTimer);cancelAnimationFrame(rafId);
-  stars.forEach(s=>s.el.remove());stars=[];
-  if(won){
-    $("#game-message").textContent="30 stars caught! You did it. ✨";
-    $("#game-message").style.display="grid";$("#start-game").textContent="Continue →";burstConfetti();
-    setTimeout(()=>goToScene(6),1000);
-  }else{
-    $("#game-message").textContent=misses>1?"Too many missed stars! The challenge is starting again…":"Time's up! Try the 30-star challenge again.";
-    $("#game-message").style.display="grid";$("#start-game").textContent="Start again";
-  }
-}
-$("#start-game").onclick=()=>score>=30?goToScene(6):startGame();
 
-// QUIZ — interest questions
-let quizIndex=0;
-function renderQuiz(){
-  const q=CONFIG.quiz[quizIndex];
-  $("#quiz-progress").style.width=`${quizIndex/CONFIG.quiz.length*100}%`;
-  $("#quiz-content").innerHTML=`<div class="question">${q.q}</div><div class="answers">${q.answers.map((a,i)=>`<button class="answer" data-answer="${i}">${a}</button>`).join("")}</div>`;
-  $$(".answer").forEach(b=>b.onclick=()=>{
-    const selected=+b.dataset.answer;
-    // These questions are for exploration, so every answer is accepted.
-    b.classList.add("correct");
-    showToast(`Nice choice! ${q.answers[selected]}`);
-    if(quizIndex<CONFIG.quiz.length-1){quizIndex++;setTimeout(renderQuiz,600)}
-    else{$("#quiz-progress").style.width="100%";setTimeout(()=>goToScene(7),800)}
-  });
-}
-renderQuiz();
-
-// COUNTDOWN
-let countdownStarted=false;
-function startCountdown(){
-  if(countdownStarted)return;countdownStarted=true;let n=3;$("#countdown").textContent=n;
-  const t=setInterval(()=>{n--;if(n<=0){clearInterval(t);$("#countdown").textContent="✨";setTimeout(()=>goToScene(8),850)}else $("#countdown").textContent=n},1000);
+    currentMusic = null;
+    currentMusicName = "";
 }
 
-// TYPEWRITER
-let typingStarted=false;
-function startTypewriter(){
-  if(typingStarted)return;typingStarted=true;const target=$("#typewriter"),text=CONFIG.message;let i=0;
-  const tick=()=>{if(i<text.length){target.textContent+=text[i++];setTimeout(tick,text[i-1]==="\n"?250:32)}else $("#message-next").classList.remove("hidden")};tick();
-}
-$("#message-next").onclick=()=>goToScene(9);
+function stopSfx() {
+    if (activeSfx) {
+        activeSfx.pause();
+        activeSfx.currentTime = 0;
+        activeSfx.onended = null;
+        activeSfx = null;
+    }
 
-// FIREWORKS
-const canvas=$("#fireworks"),ctx=canvas.getContext("2d");let particles=[],rockets=[],fireworkRunning=false;
-function resizeCanvas(){const dpr=Math.min(devicePixelRatio||1,2);canvas.width=innerWidth*dpr;canvas.height=innerHeight*dpr;canvas.style.width=innerWidth+"px";canvas.style.height=innerHeight+"px";ctx.setTransform(dpr,0,0,dpr,0,0)}
-addEventListener("resize",resizeCanvas);resizeCanvas();
-function launchFirework(x=innerWidth/2,y=innerHeight*.42){rockets.push({x:innerWidth/2+(Math.random()-.5)*40,y:innerHeight+20,tx:x+(Math.random()-.5)*90,ty:y+(Math.random()-.5)*90,speed:8+Math.random()*2.5,hue:Math.random()*360})}
-function explode(x,y,hue){for(let i=0;i<110;i++){const a=Math.random()*Math.PI*2,s=Math.random()*6+1.5;particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:1,decay:.008+Math.random()*.012,hue:hue+(Math.random()-.5)*35,size:Math.random()*2.5+1})}}
-function fireworkFrame(){
-  if(!fireworkRunning)return;
-  ctx.fillStyle="rgba(9,0,20,.18)";ctx.fillRect(0,0,innerWidth,innerHeight);
-  for(let i=rockets.length-1;i>=0;i--){const r=rockets[i],dx=r.tx-r.x,dy=r.ty-r.y,d=Math.hypot(dx,dy);r.x+=dx/d*r.speed;r.y+=dy/d*r.speed;ctx.beginPath();ctx.arc(r.x,r.y,2,0,Math.PI*2);ctx.fillStyle=`hsla(${r.hue},100%,75%,1)`;ctx.fill();if(d<12){explode(r.x,r.y,r.hue);rockets.splice(i,1)}}
-  for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.035;p.vx*=.992;p.vy*=.992;p.life-=p.decay;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fillStyle=`hsla(${p.hue},100%,72%,${Math.max(0,p.life)})`;ctx.fill();if(p.life<=0)particles.splice(i,1)}
-  requestAnimationFrame(fireworkFrame);
-}
-function startFireworks(){
-  if(fireworkRunning)return;fireworkRunning=true;resizeCanvas();ctx.clearRect(0,0,innerWidth,innerHeight);
-  // Hero burst starts from the middle of the screen.
-  launchFirework(innerWidth/2,innerHeight*.42);
-  setTimeout(()=>launchFirework(innerWidth*.28,innerHeight*.30),650);
-  setTimeout(()=>launchFirework(innerWidth*.72,innerHeight*.30),1100);
-  setTimeout(()=>launchFirework(innerWidth/2,innerHeight*.25),1650);
-  const loop=setInterval(()=>{if(currentScene!==9){clearInterval(loop);return}launchFirework(innerWidth/2+(Math.random()-.5)*innerWidth*.55,innerHeight*(.22+Math.random()*.35))},1250);
-  fireworkFrame();burstConfetti();
+    sfxToken++;
 }
 
-// FINAL PHOTO + REACTIONS
-$("#final-name").textContent=CONFIG.name;
-if(CONFIG.finalPhoto){
-  const img=$("#final-photo");
-  img.src=CONFIG.finalPhoto;
-  img.onload=()=>{$("#final-photo-placeholder").style.display="none";img.style.display="block"};
-  img.onerror=()=>{img.style.display="none";$("#final-photo-placeholder").style.display="grid"};
+function startMusic(name) {
+    if (muted || !audioUnlocked) return;
+
+    if (
+        currentMusicName === name &&
+        currentMusic &&
+        !currentMusic.paused
+    ) {
+        return;
+    }
+
+    stopMusic();
+
+    const audio = sounds[name];
+
+    if (!audio) return;
+
+    currentMusic = audio;
+    currentMusicName = name;
+
+    audio.loop = true;
+    audio.volume = name === "profile" ? 0.35 : 0.23;
+    audio.currentTime = 0;
+    audio.muted = muted;
+
+    audio.play().catch(() => {});
 }
-$("#like-btn").onclick=()=>{
-  $("#reaction-message").textContent="Thank you! ❤️ I'm so happy you liked it.";
-  $("#reaction-area").style.display="none";
+
+function playSfx(name) {
+    if (muted) return;
+
+    // Stop the previous sound before starting a new one.
+    stopSfx();
+
+    const audio = sounds[name];
+
+    if (!audio) return;
+
+    const thisToken = sfxToken;
+
+    activeSfx = audio;
+    audio.loop = false;
+    audio.currentTime = 0;
+    audio.volume = 0.8;
+    audio.muted = muted;
+
+    audio.onended = () => {
+        if (thisToken === sfxToken && activeSfx === audio) {
+            activeSfx = null;
+        }
+    };
+
+    audio.play().catch(() => {
+        if (thisToken === sfxToken) activeSfx = null;
+    });
+}
+
+function unlockAudio() {
+    if (audioUnlocked) return;
+
+    audioUnlocked = true;
+
+    if (muted) return;
+
+    // Intro and profile music are played one after the other.
+    const intro = sounds.intro;
+
+    if (!introPlayed && intro) {
+        introPlayed = true;
+
+        stopMusic();
+
+        currentMusic = intro;
+        currentMusicName = "intro";
+
+        intro.loop = false;
+        intro.currentTime = 0;
+        intro.volume = 0.3;
+
+        intro.onended = () => {
+            if ($("profileScreen").classList.contains("active")) {
+                startMusic("profile");
+            }
+        };
+
+        intro.play().catch(() => {
+            startMusic("profile");
+        });
+    } else {
+        startMusic("profile");
+    }
+}
+
+function toggleMute() {
+    muted = !muted;
+
+    $("muteBtn").textContent = muted
+        ? "🔇 Sound Off"
+        : "🔊 Sound On";
+
+    Object.values(sounds).forEach(audio => {
+        audio.muted = muted;
+    });
+
+    if (muted) {
+        stopMusic();
+        stopSfx();
+    } else if (audioUnlocked) {
+        if (game.running) {
+            startMusic("gameplay");
+        } else if ($("profileScreen").classList.contains("active")) {
+            startMusic("profile");
+        }
+    }
+}
+
+$("muteBtn").addEventListener("click", event => {
+    event.stopPropagation();
+    unlockAudio();
+    toggleMute();
+});
+
+
+/* ==========================================
+   SCREEN MANAGEMENT
+   ========================================== */
+
+const screenIds = [
+    "profileScreen",
+    "readyScreen",
+    "gameScreen",
+    "resultScreen"
+];
+
+function showScreen(id) {
+    screenIds.forEach(screen => {
+        $(screen).classList.toggle("active", screen === id);
+    });
+
+    if (id === "profileScreen") {
+        startMusic("profile");
+    } else {
+        stopMusic();
+    }
+}
+
+
+/* ==========================================
+   PROFILE SELECTION
+   ========================================== */
+
+$("defaultPreviewImg").src = DEFAULT_AVATAR;
+
+function selectProfile(type) {
+    selectedProfile = type;
+
+    $("customProfileBtn").classList.toggle(
+        "selected",
+        type === "custom"
+    );
+
+    $("defaultProfileBtn").classList.toggle(
+        "selected",
+        type === "default"
+    );
+
+    if (type === "default") {
+        selectedAvatar = DEFAULT_AVATAR;
+        profileReady = true;
+        $("profileHint").textContent =
+            "Default game profile selected.";
+    }
+
+    if (type === "custom" && customPhoto) {
+        selectedAvatar = customPhoto;
+        profileReady = true;
+        $("profileHint").textContent =
+            "Your photo is ready.";
+    }
+
+    if (type === "custom" && !customPhoto) {
+        profileReady = false;
+        $("profileHint").textContent =
+            "Choose a photo from your device.";
+
+        $("photoInput").click();
+    }
+
+    $("profileContinueBtn").disabled = !profileReady;
+}
+
+$("defaultProfileBtn").addEventListener("click", () => {
+    unlockAudio();
+    selectProfile("default");
+});
+
+$("customProfileBtn").addEventListener("click", () => {
+    unlockAudio();
+    selectProfile("custom");
+});
+
+$("photoInput").addEventListener("change", event => {
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        $("profileHint").textContent =
+            "Please select an image file.";
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+        customPhoto = reader.result;
+        selectedAvatar = customPhoto;
+        selectedProfile = "custom";
+        profileReady = true;
+
+        $("customPreview").innerHTML =
+            `<img src="${customPhoto}" alt="Custom profile">`;
+
+        $("customProfileBtn").classList.add("selected");
+        $("defaultProfileBtn").classList.remove("selected");
+
+        $("profileHint").textContent = "Your photo is ready.";
+        $("profileContinueBtn").disabled = false;
+    };
+
+    reader.readAsDataURL(file);
+});
+
+$("profileContinueBtn").addEventListener("click", () => {
+    if (!profileReady) return;
+
+    $("readyAvatar").src = selectedAvatar;
+    showScreen("readyScreen");
+});
+
+document.querySelectorAll(".back-btn").forEach(button => {
+    button.addEventListener("click", () => {
+        showScreen(button.dataset.back);
+    });
+});
+
+
+/* ==========================================
+   GAME STATE
+   ========================================== */
+
+const game = {
+    running: false,
+    paused: false,
+    over: false,
+
+    score: 0,
+    frame: 0,
+
+    player: {
+        x: 175,
+        y: 340,
+        vy: 0,
+        radius: 30
+    },
+
+    pillars: [],
+    particles: [],
+
+    difficulty: "medium",
+    nearArmed: true,
+    nearCooldown: 0,
+    lastTime: 0
 };
-$("#dislike-btn").onclick=()=>{
-  $("#reaction-message").textContent="Thanks for being honest! 😄 Let's try the journey again.";
-  $("#reaction-area").style.display="none";
-  setTimeout(()=>replayFromBeginning(),1300);
-};
-$("#replay").onclick=replayFromBeginning;
 
-function replayFromBeginning(){
-  currentScene=9;
-  $$(".scene").forEach(s=>s.classList.remove("active","exit"));
-  $("#scene-0").classList.add("active");
-  orbCount=0;giftCount=0;memoryIndex=0;quizIndex=0;countdownStarted=false;typingStarted=false;
-  $("#orb-count").textContent="0";$("#orb-event").textContent="The orb is waiting…";
-  $("#gift-count").textContent="0";$("#gift").classList.remove("open");
-  $("#typewriter").textContent="";$("#message-next").classList.add("hidden");
-  $("#reaction-area").style.display="block";$("#reaction-message").textContent="";
-  renderMemory();renderQuiz();resetStars();
+let avatarImage = new Image();
+avatarImage.src = DEFAULT_AVATAR;
+
+function syncAvatar() {
+    avatarImage = new Image();
+    avatarImage.src = selectedAvatar;
 }
 
-// EFFECTS
-function burstAt(x,y){const e=document.createElement("div");e.style.cssText=`position:fixed;left:${x}px;top:${y}px;width:8px;height:8px;border-radius:50%;background:#ffd86b;box-shadow:0 0 20px #ffd86b;z-index:100;pointer-events:none`;document.body.appendChild(e);e.animate([{transform:"scale(1)",opacity:1},{transform:"scale(5)",opacity:0}],{duration:500});setTimeout(()=>e.remove(),500)}
-function burstConfetti(){for(let i=0;i<45;i++){const c=document.createElement("span");c.textContent=["✦","✧","•","♥","✺"][Math.floor(Math.random()*5)];c.style.cssText=`position:fixed;z-index:100;left:${50+(Math.random()-.5)*20}%;top:${48+(Math.random()-.5)*10}%;font-size:${10+Math.random()*18}px;color:hsl(${Math.random()*360},100%,75%);pointer-events:none`;document.body.appendChild(c);const x=(Math.random()-.5)*innerWidth*.9,y=(Math.random()-.5)*innerHeight*.9;c.animate([{transform:"translate(0,0) scale(.5)",opacity:1},{transform:`translate(${x}px,${y}px) rotate(${Math.random()*720}deg)`,opacity:0}],{duration:1000+Math.random()*900,easing:"cubic-bezier(.1,.7,.2,1)"});setTimeout(()=>c.remove(),2000)}}
-function showToast(text){const t=$("#toast");t.textContent=text;t.classList.add("show");clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.remove("show"),1300)}
-   
+function resetGame() {
+    game.score = 0;
+    game.frame = 0;
+    game.pillars = [];
+    game.particles = [];
+
+    game.nearArmed = true;
+    game.nearCooldown = 0;
+
+    game.player = {
+        x: 175,
+        y: 340,
+        vy: 0,
+        radius: 30
+    };
+
+    for (let i = 0; i < 3; i++) {
+        spawnPillar(850 + i * 300);
+    }
+
+    $("scoreText").textContent = "0 / 10";
+    $("stageName").textContent = THEMES[0].name;
+}
+
+
+/* ==========================================
+   START / REPLAY
+   ========================================== */
+
+function startGame() {
+    unlockAudio();
+
+    stopSfx();
+    stopMusic();
+
+    game.difficulty = $("difficultySelect").value;
+
+    resetGame();
+
+    game.running = true;
+    game.paused = false;
+    game.over = false;
+
+    $("gameOverlay").classList.remove("show");
+    $("pauseBtn").textContent = "Ⅱ Pause";
+
+    syncAvatar();
+
+    showScreen("gameScreen");
+
+    startMusic("gameplay");
+
+    game.lastTime = 0;
+
+    cancelAnimationFrame(animationFrame);
+    animationFrame = requestAnimationFrame(gameLoop);
+}
+
+let animationFrame = 0;
+
+$("gameStartBtn").addEventListener("click", startGame);
+
+// Important: replay immediately starts the game using the same profile.
+$("replayBtn").addEventListener("click", startGame);
+
+$("changeProfileBtn").addEventListener("click", () => {
+    profileReady = false;
+    selectedProfile = null;
+
+    $("profileContinueBtn").disabled = true;
+
+    $("customProfileBtn").classList.remove("selected");
+    $("defaultProfileBtn").classList.remove("selected");
+
+    showScreen("profileScreen");
+});
+
+
+/* ==========================================
+   PILLAR CREATION
+   ========================================== */
+
+function spawnPillar(x) {
+    const difficulty = LEVELS[game.difficulty];
+    const gap = difficulty.gap;
+
+    const margin = 110;
+
+    const center =
+        margin + Math.random() * (700 - 54 - gap - margin * 2);
+
+    const number = game.pillars.length + game.score + 1;
+
+    game.pillars.push({
+        x: x,
+        width: 82,
+        gap: gap,
+        center: center,
+        top: center - gap / 2,
+        bottom: center + gap / 2,
+        passed: false,
+        number: number,
+        golden: number === 5,
+        phase: Math.random() * 6.28
+    });
+}
+
+
+/* ==========================================
+   FLAP / PAUSE
+   ========================================== */
+
+function flap() {
+    if (!game.running || game.paused || game.over) return;
+
+    game.player.vy = LEVELS[game.difficulty].flap;
+
+    game.nearArmed = true;
+}
+
+function pauseGame() {
+    if (!game.running || game.over) return;
+
+    game.paused = !game.paused;
+
+    $("gameOverlay").classList.toggle("show", game.paused);
+
+    $("pauseBtn").textContent =
+        game.paused ? "▶ Resume" : "Ⅱ Pause";
+
+    if (game.paused) {
+        stopMusic();
+    } else {
+        startMusic("gameplay");
+
+        game.lastTime = 0;
+        animationFrame = requestAnimationFrame(gameLoop);
+    }
+}
+
+$("pauseBtn").addEventListener("click", event => {
+    event.stopPropagation();
+    pauseGame();
+});
+
+$("resumeBtn").addEventListener("click", event => {
+    event.stopPropagation();
+    pauseGame();
+});
+
+
+/* ==========================================
+   INPUT CONTROLS
+   ========================================== */
+
+$("gameScreen").addEventListener("pointerdown", event => {
+    if (event.target.closest("button")) return;
+    if (game.paused) return;
+
+    flap();
+});
+
+document.addEventListener("keydown", event => {
+    if (
+        ["Space", "ArrowUp", "KeyW"].includes(event.code) &&
+        $("gameScreen").classList.contains("active")
+    ) {
+        event.preventDefault();
+        flap();
+    }
+
+    if (
+        event.code === "Escape" &&
+        $("gameScreen").classList.contains("active")
+    ) {
+        pauseGame();
+    }
+});
+
+document.addEventListener("pointerdown", unlockAudio, { once: true });
+document.addEventListener("keydown", unlockAudio, { once: true });
+
+
+/* ==========================================
+   COLLISION DETECTION
+   ========================================== */
+
+function isColliding() {
+    const p = game.player;
+    const floor = 700 - 24;
+
+    if (
+        p.y - p.radius <= 0 ||
+        p.y + p.radius >= floor
+    ) {
+        return true;
+    }
+
+    for (const pipe of game.pillars) {
+        const overlapX =
+            p.x + p.radius > pipe.x &&
+            p.x - p.radius < pipe.x + pipe.width;
+
+        const hitTop = p.y - p.radius < pipe.top;
+        const hitBottom = p.y + p.radius > pipe.bottom;
+
+        if (overlapX && (hitTop || hitBottom)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+/* ==========================================
+   NEAR-MISS DETECTION
+   ========================================== */
+
+function detectNearMiss() {
+    if (!game.nearArmed || game.nearCooldown > 0) {
+        return false;
+    }
+
+    const p = game.player;
+    const floor = 700 - 24;
+
+    const nearGround =
+        floor - (p.y + p.radius) < 18 &&
+        p.y + p.radius < floor;
+
+    let nearPillar = false;
+
+    for (const pipe of game.pillars) {
+        const closeX =
+            p.x + p.radius > pipe.x - 15 &&
+            p.x - p.radius < pipe.x + pipe.width + 15;
+
+        if (!closeX) continue;
+
+        const topDistance =
+            (p.y - p.radius) - pipe.top;
+
+        const bottomDistance =
+            pipe.bottom - (p.y + p.radius);
+
+        if (
+            (topDistance >= 0 && topDistance < 16) ||
+            (bottomDistance >= 0 && bottomDistance < 16)
+        ) {
+            nearPillar = true;
+            break;
+        }
+    }
+
+    if (nearGround || nearPillar) {
+        game.nearArmed = false;
+        game.nearCooldown = 30;
+
+        return true;
+    }
+
+    return false;
+}
+
+
+/* ==========================================
+   UPDATE GAME
+   ========================================== */
+
+function updateGame(dt) {
+    const p = game.player;
+    const settings = LEVELS[game.difficulty];
+
+    game.nearCooldown = Math.max(
+        0,
+        game.nearCooldown - dt
+    );
+
+    p.vy += settings.gravity * dt;
+    p.y += p.vy * dt;
+
+    let pillarCrossedThisFrame = false;
+
+    // Move pillars and apply subtle movement.
+    for (const pipe of game.pillars) {
+        pipe.x -= settings.speed * dt;
+
+        pipe.phase += 0.018 * dt;
+
+        const movement =
+            game.difficulty === "easy" ? 0 :
+            game.difficulty === "medium" ? 10 : 18;
+
+        const center =
+            pipe.center + Math.sin(pipe.phase) * movement;
+
+        pipe.top = center - pipe.gap / 2;
+        pipe.bottom = center + pipe.gap / 2;
+    }
+
+    // Collision has the highest priority.
+    if (isColliding()) {
+        finishGame(false);
+        return;
+    }
+
+    // Detect successful pillar crossing.
+    for (const pipe of game.pillars) {
+        if (
+            !pipe.passed &&
+            pipe.x + pipe.width < p.x - p.radius
+        ) {
+            pipe.passed = true;
+
+            game.score++;
+
+            pillarCrossedThisFrame = true;
+
+            $("scoreText").textContent =
+                `${game.score} / ${TOTAL_PILLARS}`;
+
+            // Switch theme after each passed pillar.
+            const themeIndex = Math.min(
+                game.score,
+                THEMES.length - 1
+            );
+
+            $("stageName").textContent =
+                THEMES[themeIndex].name;
+        }
+    }
+
+    // Pillar-crossed audio suppresses near-miss audio for this frame.
+    if (pillarCrossedThisFrame) {
+        game.nearArmed = false;
+        game.nearCooldown = 30;
+
+        playSfx("crossed");
+    } else {
+        if (detectNearMiss()) {
+            playSfx("near");
+        }
+    }
+
+    // Ten pillars only. No eleventh obstacle.
+    if (game.score >= TOTAL_PILLARS) {
+        finishGame(true);
+        return;
+    }
+
+    // Create next pillar only until the tenth one.
+    const lastPillar =
+        game.pillars[game.pillars.length - 1];
+
+    if (
+        game.score + game.pillars.length < TOTAL_PILLARS &&
+        lastPillar &&
+        lastPillar.x < 800 - 270
+    ) {
+        spawnPillar(860);
+    }
+
+    game.pillars = game.pillars.filter(
+        pipe => pipe.x + pipe.width > -10
+    );
+
+    if (
+        game.nearCooldown <= 0 &&
+        p.y + p.radius < 700 - 24 - 45
+    ) {
+        game.nearArmed = true;
+    }
+}
+
+
+/* ==========================================
+   END GAME
+   ========================================== */
+
+function finishGame(won) {
+    if (game.over) return;
+
+    game.over = true;
+    game.running = false;
+    game.paused = false;
+
+    stopMusic();
+    stopSfx();
+
+    // Only the final event sound is played.
+    playSfx(won ? "victory" : "gameover");
+
+    $("resultIcon").textContent = won ? "🏆" : "💫";
+
+    $("resultEyebrow").textContent =
+        won ? "FLIGHT COMPLETE" : "FLIGHT ENDED";
+
+    $("resultTitle").innerHTML =
+        won ? 'YOU <span>WIN!</span>' : 'NICE <span>TRY!</span>';
+
+    $("resultMessage").textContent =
+        won
+            ? "Incredible! You crossed all 10 pillars and explored every world."
+            : "That was a close flight! Try again and beat your score.";
+
+    $("finalScore").textContent =
+        `${game.score} / ${TOTAL_PILLARS}`;
+
+    $("winnerAvatar").src = selectedAvatar;
+
+    $("gameOverlay").classList.remove("show");
+
+    showScreen("resultScreen");
+
+    if (won) {
+        celebrate();
+    }
+}
+
+
+/* ==========================================
+   VICTORY CELEBRATION
+   ========================================== */
+
+function celebrate() {
+    const layer = $("celebrationLayer");
+
+    layer.innerHTML = "";
+
+    for (let i = 0; i < 55; i++) {
+        const piece = document.createElement("span");
+
+        piece.className = "confetti";
+
+        piece.style.left =
+            Math.random() * 100 + "%";
+
+        piece.style.animationDelay =
+            Math.random() * .8 + "s";
+
+        piece.style.background = [
+            "#66f0d0",
+            "#9b8cff",
+            "#ffd17d",
+            "#ffffff"
+        ][i % 4];
+
+        layer.appendChild(piece);
+    }
+}
+
+
+/* ==========================================
+   DRAW BACKGROUND
+   ========================================== */
+
+function drawBackground() {
+    const theme =
+        THEMES[Math.min(game.score, THEMES.length - 1)];
+
+    const gradient =
+        ctx.createLinearGradient(0, 0, 0, 700);
+
+    gradient.addColorStop(0, theme.sky1);
+    gradient.addColorStop(1, theme.sky2);
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 800, 700);
+
+    // Aurora glow bands.
+    for (let i = 0; i < 4; i++) {
+        ctx.globalAlpha = .09;
+        ctx.fillStyle = theme.glow;
+
+        ctx.beginPath();
+
+        ctx.ellipse(
+            140 + i * 220 + Math.sin(game.frame * .006 + i) * 40,
+            140 + i * 80,
+            180,
+            55,
+            .2,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+    }
+
+    ctx.globalAlpha = 1;
+
+    // Stars.
+    for (let i = 0; i < 45; i++) {
+        const x = (i * 137 + game.frame * .15) % 800;
+        const y = (i * 83) % 650;
+
+        ctx.fillStyle = theme.glow;
