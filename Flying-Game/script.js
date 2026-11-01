@@ -13,10 +13,10 @@ const DEFAULT_PROFILE_IMAGE_URL = "https://raw.githubusercontent.com/CHANTY-36/T
 
 /* ---------- AUDIO PLACEHOLDERS: SIX SEPARATE SOUNDS ---------- */
 // 1. INTRO AUDIO — retained as a replaceable audio slot; profile selection now opens first.
-const INTRO_AUDIO_URL = "assets/audio/intro-theme.mp3";
+const INTRO_AUDIO_URL = "https://github.com/CHANTY-36/Testing/raw/refs/heads/main/Memes/startcheyyibey_1.mp3";
 
 // 2. PROFILE SELECTION AUDIO — plays when the profile selection screen opens.
-const PROFILE_SELECTION_AUDIO_URL = "https://github.com/CHANTY-36/Testing/raw/refs/heads/main/Memes/startcheyyibey_1.mp3";
+const PROFILE_SELECTION_AUDIO_URL = "chanty.mp3";
 
 // 3. NEAR-MISS AUDIO — plays once when the player narrowly avoids a pillar/ground.
 const NEAR_MISS_AUDIO_URL = "https://github.com/CHANTY-36/Testing/raw/refs/heads/main/Memes/amma-jarunte.mp3";
@@ -63,7 +63,7 @@ function createAudio(name, url, loop = false, volume = 0.65) {
 }
 createAudio("intro", INTRO_AUDIO_URL, true, 0.35);
 createAudio("profile", PROFILE_SELECTION_AUDIO_URL, false, 0.55);
-createAudio("nearMiss", NEAR_MISS_AUDIO_URL, false, 0.05);
+createAudio("nearMiss", NEAR_MISS_AUDIO_URL, false, 1.05);
 createAudio("pillar", PILLAR_CROSSED_AUDIO_URL, false, 0.7);
 createAudio("victory", VICTORY_AUDIO_URL, false, 0.8);
 createAudio("gameOver", GAME_OVER_AUDIO_URL, false, 0.8);
