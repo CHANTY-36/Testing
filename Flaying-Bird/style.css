@@ -521,3 +521,22 @@ footer span {
         gap: 6px;
     }
 }
+/* Mobile profile selection fix */
+
+.profile-card {
+    position: relative;
+    z-index: 5;
+    pointer-events: auto;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
+}
+
+.profile-card:active {
+    transform: scale(0.97);
+}
+
+.primary-btn:disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
