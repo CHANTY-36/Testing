@@ -13,10 +13,10 @@ const DEFAULT_PROFILE_IMAGE_URL = "https://raw.githubusercontent.com/CHANTY-36/T
 
 /* ---------- AUDIO PLACEHOLDERS: SIX SEPARATE SOUNDS ---------- */
 // 1. INTRO AUDIO — retained as a replaceable audio slot; profile selection now opens first.
-const INTRO_AUDIO_URL = "https://github.com/CHANTY-36/Testing/raw/refs/heads/main/Memes/startcheyyibey_1.mp3";
+const INTRO_AUDIO_URL = "chanty.mp3";
 
 // 2. PROFILE SELECTION AUDIO — plays when the profile selection screen opens.
-const PROFILE_SELECTION_AUDIO_URL = "chanty.mp3";
+const PROFILE_SELECTION_AUDIO_URL = "https://github.com/CHANTY-36/Testing/raw/refs/heads/main/Memes/startcheyyibey_1.mp3";
 
 // 3. NEAR-MISS AUDIO — plays once when the player narrowly avoids a pillar/ground.
 const NEAR_MISS_AUDIO_URL = "https://github.com/CHANTY-36/Testing/raw/refs/heads/main/Memes/amma-jarunte.mp3";
