@@ -4,7 +4,7 @@
 
 const $ = id => document.getElementById(id);
 
-const DEFAULT_AVATAR = "https://raw.githubusercontent.com/CHANTY-36/Testing/refs/heads/main/Memes/1793545464179.png";
+const DEFAULT_AVATAR = "https://raw.githubusercontent.com/CHANTY-36/Testing/main/Memes/1793545464179.png";
 
 const AUDIO = {
     intro: "https://github.com/CHANTY-36/Testing/raw/refs/heads/main/Memes/startcheyyibey_1.mp3",
@@ -241,81 +241,73 @@ function showScreen(id) {
 }
 
 
-/* ==========================================
-   PROFILE SELECTION
-   ========================================== */
 
-$("defaultPreviewImg").src = DEFAULT_AVATAR;
+  /* ==========================================
+   PROFILE SELECTION — MOBILE FIX
+   ========================================== */
 
 function selectProfile(type) {
     selectedProfile = type;
 
-    $("customProfileBtn").classList.toggle(
-        "selected",
-        type === "custom"
-    );
+    const customBtn = $("customProfileBtn");
+    const defaultBtn = $("defaultProfileBtn");
+    const continueBtn = $("profileContinueBtn");
+    const hint = $("profileHint");
 
-    $("defaultProfileBtn").classList.toggle(
-        "selected",
-        type === "default"
-    );
+    customBtn.classList.toggle("selected", type === "custom");
+    defaultBtn.classList.toggle("selected", type === "default");
 
     if (type === "default") {
         selectedAvatar = DEFAULT_AVATAR;
         profileReady = true;
-        $("profileHint").textContent =
-            "Default game profile selected.";
+        hint.textContent = "Default game profile selected.";
+    } else {
+        if (customPhoto) {
+            selectedAvatar = customPhoto;
+            profileReady = true;
+            hint.textContent = "Your photo is ready.";
+        } else {
+            profileReady = false;
+            hint.textContent = "Choose a photo from your device.";
+            $("photoInput").click();
+        }
     }
 
-    if (type === "custom" && customPhoto) {
-        selectedAvatar = customPhoto;
-        profileReady = true;
-        $("profileHint").textContent =
-            "Your photo is ready.";
-    }
-
-    if (type === "custom" && !customPhoto) {
-        profileReady = false;
-        $("profileHint").textContent =
-            "Choose a photo from your device.";
-
-        $("photoInput").click();
-    }
-
-    $("profileContinueBtn").disabled = !profileReady;
+    continueBtn.disabled = !profileReady;
 }
 
-$("defaultProfileBtn").addEventListener("click", () => {
+$("defaultProfileBtn").addEventListener("click", function(event) {
+    event.preventDefault();
     unlockAudio();
     selectProfile("default");
 });
 
-$("customProfileBtn").addEventListener("click", () => {
+$("customProfileBtn").addEventListener("click", function(event) {
+    event.preventDefault();
     unlockAudio();
     selectProfile("custom");
 });
 
-$("photoInput").addEventListener("change", event => {
+$("photoInput").addEventListener("change", function(event) {
     const file = event.target.files[0];
 
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-        $("profileHint").textContent =
-            "Please select an image file.";
+        $("profileHint").textContent = "Please select an image.";
         return;
     }
 
     const reader = new FileReader();
 
-    reader.onload = () => {
+    reader.onload = function() {
         customPhoto = reader.result;
         selectedAvatar = customPhoto;
         selectedProfile = "custom";
         profileReady = true;
 
         $("customPreview").innerHTML =
-            `<img src="${customPhoto}" alt="Custom profile">`;
+            `<img src="${customPhoto}" alt="Your profile">`;
 
         $("customProfileBtn").classList.add("selected");
         $("defaultProfileBtn").classList.remove("selected");
@@ -327,19 +319,23 @@ $("photoInput").addEventListener("change", event => {
     reader.readAsDataURL(file);
 });
 
-$("profileContinueBtn").addEventListener("click", () => {
+$("profileContinueBtn").addEventListener("click", function(event) {
+    event.preventDefault();
+
     if (!profileReady) return;
 
     $("readyAvatar").src = selectedAvatar;
+
     showScreen("readyScreen");
 });
 
 document.querySelectorAll(".back-btn").forEach(button => {
-    button.addEventListener("click", () => {
-        showScreen(button.dataset.back);
+    button.addEventListener("click", function() {
+        showScreen(this.dataset.back);
     });
-});
+});  
 
+      
 
 /* ==========================================
    GAME STATE
