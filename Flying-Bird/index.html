@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#031b29">
+  <title>Aurora Flight</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">✦ AURORA <span>FLIGHT</span></div>
+    <button id="soundToggle" class="sound-toggle" type="button">🔊 Sound On</button>
+  </header>
+
+  <main>
+    <section id="profileScreen" class="screen active">
+      <div class="intro">
+        <p class="eyebrow">CHOOSE YOUR PLAYER</p>
+        <h1>Ready to <span>take off?</span></h1>
+        <p class="lead">Choose your own photo or fly with the default game character.</p>
+      </div>
+
+      <div class="profile-options">
+        <button id="customProfileBtn" class="profile-card" type="button" aria-pressed="false">
+          <div class="avatar-ring" id="customPreview"><span class="plus">＋</span></div>
+          <strong>Custom Profile</strong>
+          <small>Upload your own photo</small>
+        </button>
+        <button id="defaultProfileBtn" class="profile-card" type="button" aria-pressed="false">
+          <div class="avatar-ring"><img id="defaultPreviewImg" src="assets/default-character.svg" alt="Default character"></div>
+          <strong>Game Profile</strong>
+          <small>Default character</small>
+        </button>
+      </div>
+
+      <input id="photoInput" type="file" accept="image/*" hidden>
+      <p id="profileHint" class="hint" aria-live="polite">Select a profile to continue.</p>
+      <button id="profileContinueBtn" class="primary-btn" type="button" disabled>CONTINUE →</button>
+    </section>
+
+    <section id="readyScreen" class="screen">
+      <p class="eyebrow">PLAYER CONFIRMED</p>
+      <h1>That's your <span>flyer!</span></h1>
+      <img id="readyAvatar" class="ready-avatar" src="assets/default-character.svg" alt="Selected player">
+      <label class="difficulty-label" for="difficulty">Choose difficulty</label>
+      <select id="difficulty">
+        <option value="easy">Easy</option>
+        <option value="medium" selected>Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+      <p class="hint">Cross all 10 pillars. Every pillar brings a new world!</p>
+      <button id="flyBtn" class="primary-btn" type="button">LET'S FLY →</button>
+      <button id="backToProfileBtn" class="text-btn" type="button">← Change profile</button>
+    </section>
+
+    <section id="gameScreen" class="screen game-screen">
+      <div class="game-heading">
+        <div><p class="eyebrow">YOUR FLIGHT</p><h2 id="worldName">Aurora Skies</h2></div>
+        <div class="score-pill">PILLARS <b id="score">0</b> / 10</div>
+      </div>
+      <div class="game-wrap">
+        <canvas id="gameCanvas" width="720" height="900" aria-label="Aurora Flight game area"></canvas>
+        <div id="pauseOverlay" class="pause-overlay hidden">
+          <h2>Paused</h2><p>Your flight is waiting.</p>
+          <button id="resumeBtn" class="primary-btn" type="button">RESUME</button>
+        </div>
+      </div>
+      <div class="game-controls">
+        <span>Tap anywhere to fly • SPACE</span>
+        <button id="pauseBtn" class="small-btn" type="button">Ⅱ Pause</button>
+      </div>
+    </section>
+
+    <section id="resultScreen" class="screen">
+      <div class="result-icon" id="resultIcon">🏆</div>
+      <p class="eyebrow" id="resultEyebrow">FLIGHT COMPLETE</p>
+      <h1 id="resultTitle">YOU WIN!</h1>
+      <img id="resultAvatar" class="ready-avatar" src="assets/default-character.svg" alt="Your player">
+      <p id="resultMessage" class="lead">Amazing flight!</p>
+      <div class="final-score">YOUR SCORE <b id="finalScore">10 / 10</b></div>
+      <button id="tryAgainBtn" class="primary-btn" type="button">TRY AGAIN ↻</button>
+      <button id="changeProfileBtn" class="text-btn" type="button">Change profile</button>
+    </section>
+  </main>
+
+  <footer>AURORA FLIGHT <span>•</span> TEN PILLARS. TEN WORLDS.</footer>
+  <script src="script.js"></script>
+</body>
+</html>
