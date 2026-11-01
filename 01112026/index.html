@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#170b08">
+<title>Ember & Ever — A Birthday Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-fire">
+<div class="ambient" id="ambient"></div><div class="toast" id="toast"></div>
+<main id="app">
+<section class="scene active intro" id="scene-0">
+ <div class="intro-mark">✦ &nbsp; AN EXPERIENCE IN YOUR HONOUR &nbsp; ✦</div>
+ <div class="intro-orbit"><span></span><i></i><b></b></div>
+ <p class="kicker">A little world, made for one person</p>
+ <h1>Tonight, the story<br>has <em>your name</em> on it.</h1>
+ <p class="intro-copy">No instructions. No expectations. Just a few unexpected moments, a little adventure, and a celebration waiting at the end.</p>
+ <button class="btn primary" data-next="1">Step inside <span>↗</span></button>
+ <div class="intro-foot">TAKE YOUR TIME · ENJOY EVERY MOMENT</div>
+</section>
+<section class="scene" id="scene-1">
+ <div class="chapter-head"><span class="chapter-tag">01 / THE FIRST DECISION</span><h2>Pick the world<br>you want to <em>enter.</em></h2><p>Two moods. One journey. Your choice will dress every chapter that follows.</p></div>
+ <div class="theme-options">
+  <button class="theme-choice fire-choice" data-theme="fire"><span class="choice-art fire-art"><i></i><b></b><strong>✦</strong></span><span class="choice-title">FIRE & GOLD</span><small>Bold · radiant · unstoppable</small><span class="choice-cta">Choose this world →</span></button>
+  <button class="theme-choice casual-choice" data-theme="casual"><span class="choice-art casual-art"><i></i><b></b><strong>◈</strong></span><span class="choice-title">MAROON & BLACK</span><small>Calm · classy · effortless</small><span class="choice-cta">Choose this world →</span></button>
+ </div>
+ <p class="choice-note" id="theme-note">Your choice changes the colours, lighting, particles and motion — not the story.</p>
+</section>
+<section class="scene activity-scene" id="scene-2">
+ <div class="chapter-head"><span class="chapter-tag">02 / THE SPARK FORGE</span><h2>Bring the symbols<br>back <em>to life.</em></h2><p>Tap the floating embers before they fade. Awaken all five to reveal your first secret.</p></div>
+ <div class="forge-board" id="forge-board"><div class="forge-core">✦</div><button class="ember e1" aria-label="ember one">✧</button><button class="ember e2" aria-label="ember two">✦</button><button class="ember e3" aria-label="ember three">✧</button><button class="ember e4" aria-label="ember four">✦</button><button class="ember e5" aria-label="ember five">✧</button></div>
+ <div class="activity-status" id="forge-status">0 / 5 embers awakened</div><div class="secret-line" id="forge-secret">Every great story starts with a spark.</div>
+</section>
+<section class="scene activity-scene" id="scene-3">
+ <div class="chapter-head"><span class="chapter-tag">03 / THE HIDDEN PASSAGE</span><h2>Something is waiting<br>on the <em>other side.</em></h2><p>Pull the golden lever down to release the lock. The door will do the rest.</p></div>
+ <div class="vault-wrap"><div class="vault-door" id="vault-door"><div class="vault-rim"><div class="vault-wheel">✧</div><span class="vault-label">THE UNEXPECTED</span></div></div><div class="vault-glow"></div></div>
+ <div class="lever-zone"><div class="lever-track"><div class="lever-fill" id="lever-fill"></div></div><input type="range" id="vault-lever" min="0" max="100" value="0" aria-label="Pull the lever to open the door"><span>DRAG TO UNLOCK</span></div>
+ <p class="activity-status" id="vault-status">The lock is still asleep.</p>
+</section>
+<section class="scene memory-scene" id="scene-4">
+ <div class="chapter-head"><span class="chapter-tag">04 / THE MEMORY GALLERY</span><h2>Little moments.<br><em>Forever yours.</em></h2><p>Seven frames from a collection that deserves to be revisited.</p></div>
+ <div class="memory-shell"><div class="memory-card" id="memory-card"><div class="memory-number" id="memory-number">01 — 07</div><div class="memory-photo" id="memory-photo"><div class="photo-placeholder">ADD PHOTO 01</div></div><div class="memory-caption" id="memory-caption">A moment worth keeping close.</div></div>
+ <div class="memory-controls"><button class="round-btn" id="memory-prev" aria-label="Previous photo">←</button><div class="dots" id="memory-dots"></div><button class="round-btn" id="memory-next" aria-label="Next photo">→</button></div><p class="hint">Swipe the photo or use the arrows</p><button class="btn primary small hidden" id="memory-continue">Continue the journey →</button></div>
+</section>
+<section class="scene race-scene" id="scene-5">
+ <div class="chapter-head"><span class="chapter-tag">05 / THE MIDNIGHT RUN</span><h2>Ready, set, <em>escape.</em></h2><p>Steer through the road, collect 12 glowing tokens and avoid the barriers. Drag left or right on the road.</p></div>
+ <div class="race-hud"><span>✦ <b id="race-score">0</b> / 12</span><span>TIME <b id="race-time">35</b>s</span><span>HITS <b id="race-hits">0</b> / 3</span></div>
+ <div class="race-track" id="race-track"><div class="road-lines"></div><div class="race-player" id="race-player">🏎️</div><div class="race-message" id="race-message">Your ride is waiting.<br><small>Tap start when you're ready.</small></div></div>
+ <button class="btn primary small" id="race-start">Start the race</button>
+</section>
+<section class="scene discover-scene" id="scene-6">
+ <div class="chapter-head"><span class="chapter-tag">06 / THE YOU FILES</span><h2>Let’s discover<br>your kind of <em>magic.</em></h2><p>No right answers. Choose what feels most like you — this little profile is all about your personality.</p></div>
+ <div class="discover-card"><div class="discover-progress"><span id="discover-progress"></span></div><div class="discover-count" id="discover-count">01 / 05</div><h3 id="discover-question">Your ideal free day looks like…</h3><div class="discover-options" id="discover-options"></div><p class="discover-feedback" id="discover-feedback">Pick the one that feels closest.</p></div>
+ <div class="profile-reveal hidden" id="profile-reveal"><div class="profile-icon">✧</div><p>YOUR LITTLE PERSONALITY SNAPSHOT</p><h3 id="profile-title">The Curious Soul</h3><div id="profile-traits"></div><button class="btn primary small" id="profile-continue">That’s me. Continue →</button></div>
+</section>
+<section class="scene countdown-scene" id="scene-7">
+ <span class="chapter-tag">07 / BEFORE THE WISH</span><div class="countdown-ring"><span id="countdown">3</span></div><h2>One breath.<br>One wish. <em>One more surprise.</em></h2><p>The next page is meant to be read slowly.</p>
+</section>
+<section class="scene letter-scene" id="scene-8">
+ <div class="letter-card"><span class="chapter-tag">08 / A NOTE FOR YOU</span><div class="letter-seal">✦</div><h2>Some words<br>are <em>just for you.</em></h2><div class="typewriter" id="typewriter"></div><button class="btn primary small hidden" id="message-next">Open the final scene →</button></div>
+</section>
+<section class="scene final-scene" id="scene-9">
+ <canvas id="fireworks"></canvas><div class="final-content">
+  <div class="final-overline">THE WORLD CELEBRATES YOU</div><div class="final-number">✦ 23 ✦</div><h2>HAPPY<br><em>BIRTHDAY</em></h2><p class="final-name" id="final-name">To The Topper</p><p class="final-quote">May your next chapter be louder with laughter, richer in memories, and brighter than every dream you dare to chase.</p>
+  <div class="photo-triptych"><div class="side-photo left-photo" id="final-side-left"><span>MEMORY 01</span><b>✧</b></div><div class="center-photo"><img id="final-photo" alt="Birthday portrait"><div id="final-photo-placeholder">YOUR PHOTO</div></div><div class="side-photo right-photo" id="final-side-right"><span>MEMORY 07</span><b>✦</b></div></div>
+  <p class="photo-note">Three frames. One beautiful story.</p><div class="final-line"></div><div class="reaction-area" id="reaction-area"><p>Did this little world make you smile?</p><div><button class="btn primary small" id="like-btn">It did ❤️</button><button class="btn outline small" id="dislike-btn">Let's try again</button></div></div><p class="reaction-message" id="reaction-message"></p><button class="replay" id="replay">↻ &nbsp; Revisit the journey</button>
+ </div>
+</section>
+</main>
+<audio id="birthdayMusic" loop preload="none"><source src="https://github.com/cha-nty/happybirthday-/raw/refs/heads/main/paulyudin-cartoon-cartoons-music-595946.mp3" type="audio/mpeg"></audio>
+<script src="script.js"></script>
+</body></html>
