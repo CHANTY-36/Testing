@@ -6,7 +6,7 @@
 
 /* ---------- IMAGE PLACEHOLDERS ---------- */
 // Replace this with the image you upload for the general/default game profile.
-const DEFAULT_PROFILE_IMAGE_URL = "assets/default-character.png";
+const DEFAULT_PROFILE_IMAGE_URL = "https://raw.githubusercontent.com/CHANTY-36/Testing/refs/heads/main/Memes/1793545464179.png";
 
 // A custom player's uploaded photo is used locally in this browser only.
 // It is NOT uploaded to a server and is not saved permanently.
@@ -16,19 +16,19 @@ const DEFAULT_PROFILE_IMAGE_URL = "assets/default-character.png";
 const INTRO_AUDIO_URL = "assets/audio/intro-theme.mp3";
 
 // 2. PROFILE SELECTION AUDIO — plays when the profile selection screen opens.
-const PROFILE_SELECTION_AUDIO_URL = "assets/audio/profile-selection.mp3";
+const PROFILE_SELECTION_AUDIO_URL = "https://github.com/CHANTY-36/Testing/raw/refs/heads/main/Memes/startcheyyibey.mp3";
 
 // 3. NEAR-MISS AUDIO — plays once when the player narrowly avoids a pillar/ground.
-const NEAR_MISS_AUDIO_URL = "assets/audio/near-miss.mp3";
+const NEAR_MISS_AUDIO_URL = "https://github.com/CHANTY-36/Testing/raw/refs/heads/main/Memes/amma-jarunte.mp3";
 
 // 4. PILLAR-CROSSED AUDIO — plays every time one pillar pair is passed successfully.
-const PILLAR_CROSSED_AUDIO_URL = "assets/audio/pillar-crossed.mp3";
+const PILLAR_CROSSED_AUDIO_URL = "https://github.com/CHANTY-36/Testing/raw/refs/heads/main/Memes/aachitikalu_1.mp3";
 
 // 5. VICTORY AUDIO — plays after the player passes all 10 pillars.
-const VICTORY_AUDIO_URL = "assets/audio/victory.mp3";
+const VICTORY_AUDIO_URL = "https://github.com/CHANTY-36/Testing/raw/refs/heads/main/Memes/okapanicheyyi.mp3";
 
 // 6. GAME-OVER AUDIO — plays when the player hits a pillar or the ground.
-const GAME_OVER_AUDIO_URL = "assets/audio/game-over.mp3";
+const GAME_OVER_AUDIO_URL = "https://github.com/CHANTY-36/Testing/raw/refs/heads/main/Memes/sairamsairam.mp3";
 
 /* ---------- GAME SETTINGS ---------- */
 const TOTAL_PILLARS_TO_WIN = 10;
